@@ -1,0 +1,52 @@
+*************************
+  Planning
+***********************
+Use: Animation curves, parameters
+
+
+__Monday__
+Planning
+Basic functionality:
+* Dynamic sized board
+* Spawners
+* Game objects
+* Linking (8 directions)
+* Cancel current link
+* Match and remove
+
+
+__Tuesday__
+Game play:
+* Void tiles
+* Fall logic
+* Stable board
+* Score
+* End condition: Moves and score
+* Reshuffle (if no matches)
+
+
+__Wednesday__
+UI:
+* Level selection screen
+* Scrolling score text
+* Total score
+* Goal score
+* Exclamations
+Github hookup
+
+
+__Thursday__
+* Level editor
+
+
+__Friday__
+* Level editor
+
+
+__Saturday__
+* Art and juice
+
+
+__Sunday__
+* Final touches
+* Delivery
