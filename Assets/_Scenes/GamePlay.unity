@@ -233,8 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdefb1e196c7e41ff8646105f1b08eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _BoardWidth: 6
-  _BoardHeight: 9
+  _BoardWidth: 3
+  _BoardHeight: 3
+  _Colors: 5
   _ClearScore: 1000
   _Moves: 24
 --- !u!4 &1860317250
@@ -295,3 +296,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Settings: {fileID: 1860317249}
+  _BoardTilePrefab: {fileID: 6953911376855918421, guid: cc337d914a5eb46ada22cf52b5c38c9c,
+    type: 3}
