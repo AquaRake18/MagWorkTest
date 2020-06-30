@@ -9,7 +9,7 @@ public class Board : MonoBehaviour {
         int count = 0;
         for (int y = 0; y < _Settings._BoardHeight; ++y) {
             for (int x = 0; x < _Settings._BoardWidth; ++x) {
-                GameObject obj = Instantiate(
+                GameObject bgTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
                         boardPos.x + x * Layouts._BoardTileSize.x,
@@ -18,8 +18,8 @@ public class Board : MonoBehaviour {
                     ),
                     Quaternion.identity
                 );
-                obj.name = "Tile_" + count;
-                obj.transform.parent = gameObject.transform;
+                bgTile.name = "Tile_" + count;
+                bgTile.transform.parent = gameObject.transform;
                 ++count;
             }
         }
