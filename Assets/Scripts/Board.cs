@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Board : MonoBehaviour {
-    public Settings _Settings;
+    public LevelSettings _Settings;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     private List<LinkerSpawner> _Spawners = new List<LinkerSpawner>();

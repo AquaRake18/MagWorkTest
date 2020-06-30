@@ -8,7 +8,7 @@ public class LinkerObject : MonoBehaviour {
         _Sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public void Initialize(Settings settings) {
+    public void Initialize(LevelSettings settings) {
         _LinkerType = (ELinkerType)Random.Range(0, settings._LinkerColors);
         _Sprite.color = LinkerTypeUtil.GetColor(_LinkerType);
     }

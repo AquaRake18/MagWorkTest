@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Settings : MonoBehaviour {
+public class LevelSettings : MonoBehaviour {
     public readonly int _MaxWidth = 9;
     public readonly int _MaxHeight = 9;
     [Range(3, 9)]
