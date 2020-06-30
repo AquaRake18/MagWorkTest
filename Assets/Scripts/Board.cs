@@ -12,8 +12,7 @@ public class Board : MonoBehaviour {
     void Start() {
         PositionBoard();
         InstantiateLinkerSpawners();
-        InstantiateBoardTiles();
-        InstantiateLinkerObjects();
+        InstantiateTilesWithLinkers();
     }
 
     private void PositionBoard() {
@@ -39,12 +38,12 @@ public class Board : MonoBehaviour {
         }
     }
 
-    private void InstantiateBoardTiles() {
+    private void InstantiateTilesWithLinkers() {
         _BoardTiles = new BoardTile[_Settings._BoardWidth, _Settings._BoardHeight];
-        int count = 0;
+        int tileCount = 0;
         for (int y = 0; y < _Settings._BoardHeight; ++y) {
             for (int x = 0; x < _Settings._BoardWidth; ++x) {
-                GameObject go = Instantiate(
+                GameObject goTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
                         gameObject.transform.position.x + x * Layouts._BoardTileSize.x,
@@ -53,24 +52,19 @@ public class Board : MonoBehaviour {
                     ),
                     Quaternion.identity
                 );
-                go.name = "Tile_" + count;
-                go.transform.parent = gameObject.transform;
-                _BoardTiles[x,y] = go.GetComponent<BoardTile>();
-                ++count;
-            }
-        }
-    }
+                goTile.name = "Tile_" + tileCount;
+                goTile.transform.parent = gameObject.transform;
+                _BoardTiles[x,y] = goTile.GetComponent<BoardTile>();
+                ++tileCount;
 
-    private void InstantiateLinkerObjects() {
-        for (int y = 0; y < _Settings._BoardHeight; ++y) {
-            for (int x = 0; x < _Settings._BoardWidth; ++x) {
                 GameObject linkerObjectType = _LinkerTypes[Random.Range(0, Mathf.Clamp(_LinkerTypes.Length, 0, _Settings._LinkerColors))];
-                GameObject go = Instantiate(
+                GameObject goLinker = Instantiate(
                     linkerObjectType,
-                    _BoardTiles[x,y].transform.position,
+                    goTile.transform.position,
                     Quaternion.identity
                 );
-                _BoardTiles[x,y]._LinkerObject = go.GetComponent<LinkerObject>();
+                goLinker.transform.parent = _BoardTiles[x,y].transform;
+                _BoardTiles[x,y]._LinkerObject = goLinker.GetComponent<LinkerObject>();
             }
         }
     }
