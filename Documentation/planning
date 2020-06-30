@@ -6,6 +6,13 @@ Use: Animation curves, parameters
 
 __Monday__
 Planning
+Github hookup
+Start menu
+Temp art
+
+
+__Tuesday__
+Gitignore
 Basic functionality:
 * Dynamic sized board
 * Spawners
@@ -15,28 +22,23 @@ Basic functionality:
 * Match and remove
 
 
-__Tuesday__
+__Wednesday__
 Game play:
 * Void tiles
 * Fall logic
 * Stable board
 * Score
 * End condition: Moves and score
-* Reshuffle (if no matches)
+* Reshuffle (if no possible matches)
 
 
-__Wednesday__
+__Thursday__
 UI:
-* Level selection screen
+* Level selection menu
 * Scrolling score text
 * Total score
 * Goal score
 * Exclamations
-Github hookup
-
-
-__Thursday__
-* Level editor
 
 
 __Friday__
