@@ -24,12 +24,12 @@ Basic functionality:
 
 __Wednesday__
 Game play:
-* Void tiles
 * Fall logic
 * Stable board
 * Score
 * End condition: Moves and score
 * Reshuffle (if no possible matches)
+* Void tiles
 
 
 __Thursday__
