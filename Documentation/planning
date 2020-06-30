@@ -17,13 +17,13 @@ Basic functionality:
 * Dynamic sized board
 * Spawners
 * Game objects
-* Linking (8 directions)
-* Cancel current link
-* Match and remove
 
 
 __Wednesday__
 Game play:
+* Linking (8 directions)
+* Cancel current link
+* Match and remove
 * Fall logic
 * Stable board
 * Score
