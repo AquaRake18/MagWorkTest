@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BoardTile
+    uniqueID: 2002252623
+    locked: 0
+  - name: LinkerObject
+    uniqueID: 1136328135
+    locked: 0

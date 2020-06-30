@@ -5,15 +5,23 @@ public class Board : MonoBehaviour {
     public GameObject _BoardTilePrefab;
 
     void Start() {
-        Vector2 boardPos = Layouts.GetBoardPos(_Settings);
+        PositionBoard();
+        InstantiateBoardTiles();
+    }
+
+    private void PositionBoard() {
+        gameObject.transform.position = Layouts.GetBoardPos(_Settings);
+    }
+
+    private void InstantiateBoardTiles() {
         int count = 0;
         for (int y = 0; y < _Settings._BoardHeight; ++y) {
             for (int x = 0; x < _Settings._BoardWidth; ++x) {
                 GameObject bgTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
-                        boardPos.x + x * Layouts._BoardTileSize.x,
-                        boardPos.y + y * Layouts._BoardTileSize.y,
+                        gameObject.transform.position.x + x * Layouts._BoardTileSize.x,
+                        gameObject.transform.position.y + y * Layouts._BoardTileSize.y,
                         0
                     ),
                     Quaternion.identity
