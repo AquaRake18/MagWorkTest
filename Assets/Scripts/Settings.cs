@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
 public class Settings : MonoBehaviour {
-    [Range(3,9)]
+    public readonly int _MaxWidth = 9;
+    public readonly int _MaxHeight = 9;
+    [Range(3, 9)]
     public int _BoardWidth = 6;
-    [Range(3,9)]
+    [Range(3, 9)]
     public int _BoardHeight = 9;
     [Range(2,5)]
     public int _Colors = 5;

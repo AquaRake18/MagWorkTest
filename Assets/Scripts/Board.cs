@@ -7,7 +7,7 @@ public class Board : MonoBehaviour {
     void Start() {
         Vector2 boardPos = Layouts.GetBoardPos(_Settings);
         int count = 0;
-        for (int y = _Settings._BoardHeight; y > 0; --y) {
+        for (int y = 0; y < _Settings._BoardHeight; ++y) {
             for (int x = 0; x < _Settings._BoardWidth; ++x) {
                 GameObject obj = Instantiate(
                     _BoardTilePrefab,
