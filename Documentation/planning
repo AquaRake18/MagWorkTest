@@ -26,11 +26,11 @@ Game play:
 * Match and remove
 * Linking (Adjacent restriction)
 * Collapse row
-* Actual spawning
 * Stable board (states)
 
 
 __Thursday__
+* Actual spawning
 * End condition: Moves and score
 * Reshuffle (if no possible matches)
 UI:
@@ -48,10 +48,10 @@ __Friday__
 
 __Saturday__
 * Art and juice
+* Accelerating fall speed
 
 
 __Sunday__
 * Pooling
-* Void tiles
 * Final touches
 * Delivery
