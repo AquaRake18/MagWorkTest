@@ -26,11 +26,11 @@ public class LinkerObject : MonoBehaviour {
 	private ELinkerState _LinkerState = ELinkerState.Inactive;
 	private LinkerLogic _LinkerLogic = null;
 	public ELinkerTypeID _LinkerTypeID;
-	public int _ArrayID;
+	public SGridCoords _GridCoords;
 
-	public void Reset(LinkerLogic linkerLogic, int arrayID) {
+	public void Reset(LinkerLogic linkerLogic, SGridCoords gridCoords) {
 		_LinkerLogic = linkerLogic;
-		_ArrayID = arrayID;
+		_GridCoords = gridCoords;
 	}
 
 	void Awake() {
