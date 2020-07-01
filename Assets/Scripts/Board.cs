@@ -8,11 +8,12 @@ public class Board : MonoBehaviour {
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
 
-    private LinkerLogic _LinkerLogic = new LinkerLogic();
     private FallLogic _FallLogic = new FallLogic();
+    private LinkerLogic _LinkerLogic;
     private List<LinkerSpawner> _Spawners = new List<LinkerSpawner>();
 
     void Start() {
+        _LinkerLogic = new LinkerLogic(_FallLogic);
         PositionBoard();
         InstantiateLinkerSpawners();
         InstantiateTilesWithLinkers();

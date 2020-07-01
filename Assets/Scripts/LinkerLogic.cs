@@ -10,8 +10,13 @@ public class LinkerLogic {
         }
     }
 
+    private AFallLogic _FallLogic;
     private readonly int _MinimumLinks = 3;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
+
+    public LinkerLogic(AFallLogic fallLogic) {
+        _FallLogic = fallLogic;
+    }
 
     private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
         for (int index = 0; index < _LinkedObjects.Count; ++index) {
@@ -83,6 +88,7 @@ public class LinkerLogic {
             foreach (LinkerObject obj in _LinkedObjects) {
                 obj.ConfirmLink();
             }
+            _FallLogic.UnstableBoard();
         }
         _LinkedObjects.Clear();
     }
