@@ -456,8 +456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdefb1e196c7e41ff8646105f1b08eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _BoardWidth: 4
-  _BoardHeight: 4
+  _BoardWidth: 9
+  _BoardHeight: 9
   _LinkerColors: 5
   _ClearScore: 1000
   _Moves: 24

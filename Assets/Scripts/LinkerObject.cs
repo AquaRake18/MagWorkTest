@@ -58,12 +58,6 @@ public class LinkerObject : MonoBehaviour {
 		}
 	}
 
-	void OnMouseExit() {
-		if (_LinkerState == ELinkerState.Focused) {
-			_LinkerState = ELinkerState.Linked;
-		}
-	}
-
     private void CalculateAngle() {
         _Angle = Mathf.Atan2(
             _EndTouchPosition.y - _BeginTouchPosition.y,
@@ -87,6 +81,14 @@ public class LinkerObject : MonoBehaviour {
 				_Sprite.color = new Color(255f, 255f, 255f, 255f);
 			break;
 		}
+	}
+
+	public void SetFocused() {
+		_LinkerState = ELinkerState.Focused;
+	}
+
+	public void SetLinked() {
+		_LinkerState = ELinkerState.Linked;
 	}
 
 	public void CancelLink() {

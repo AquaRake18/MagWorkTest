@@ -1,9 +1,37 @@
 ﻿using System.Collections.Generic;
 
 public class LinkerLogic {
+    public readonly struct SRemoveRange {
+        public int _StartIndex { get; }
+        public int _Count { get; }
+        public SRemoveRange(int startIndex, int count) {
+            _StartIndex = startIndex;
+            _Count = count;
+        }
+    }
+
     private readonly int _MinimumLinks = 3;
     private LinkerObject[,] _BoardObjectsRef;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
+
+    private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
+        for (int index = 0; index < _LinkedObjects.Count; ++index) {
+            if (_LinkedObjects[index] == linkerObject) {
+                // because last index has no next
+                if (index < _LinkedObjects.Count - 1) {
+                    return new SRemoveRange(index + 1, _LinkedObjects.Count - (index + 1));
+                }
+            }
+        }
+        return new SRemoveRange(0, 0);
+    }
+
+    private LinkerObject GetFocusedObject() {
+        if (_LinkedObjects.Count > 0) {
+            return _LinkedObjects[_LinkedObjects.Count - 1];
+        }
+        return null;
+    }
 
     public void Initialize(ref LinkerObject[,] boardObjects) {
         _BoardObjectsRef = boardObjects;
@@ -14,19 +42,42 @@ public class LinkerLogic {
     }
 
     public bool AddLinker(LinkerObject linkerObject) {
-        if (!HasActiveLink()
+        if (linkerObject == GetFocusedObject()) {
+            // if compares to self, do nothing
+            return false;
+        } else if (_LinkedObjects.Contains(linkerObject)) {
+            // if already exists, unlink it and all that comes after it
+            Unlink(linkerObject);
+            return false;
+        } else if (!HasActiveLink()
             || (!_LinkedObjects.Contains(linkerObject)
             && linkerObject._LinkerTypeID == _LinkedObjects[0]._LinkerTypeID
-            && IsAdjacent(linkerObject))) {
+            && IsAdjacent(_LinkedObjects[_LinkedObjects.Count - 1], linkerObject))) {
+            // if new AND same type AND adjacent, successful link
+            if (_LinkedObjects.Count > 0) {
+                _LinkedObjects[_LinkedObjects.Count - 1].SetLinked();
+            }
             _LinkedObjects.Add(linkerObject);
             return true;
         }
         return false;
     }
 
-    public bool IsAdjacent(LinkerObject other) {
-        LinkerObject lastElement = _LinkedObjects[_LinkedObjects.Count - 1];
-        return true;
+    private void Unlink(LinkerObject linkerObject) {
+        if (linkerObject) {
+            linkerObject.CancelLink();
+            SRemoveRange removeRange = GetRangeFromNextToEnd(linkerObject);
+            for (int index = 0; index < _LinkedObjects.Count; ++index) {
+                if (index == removeRange._StartIndex - 1) {
+                    _LinkedObjects[index].SetFocused();
+                } else if (index >= removeRange._StartIndex) {
+                    _LinkedObjects[index].CancelLink();
+                }
+            }
+            if (removeRange._Count > 0) {
+                _LinkedObjects.RemoveRange(removeRange._StartIndex, removeRange._Count);
+            }
+        }
     }
 
     public void ConfirmLink() {
@@ -40,5 +91,12 @@ public class LinkerLogic {
             }
         }
         _LinkedObjects.Clear();
+    }
+
+    public bool IsAdjacent(LinkerObject fromObj, LinkerObject toObj) {
+        if (!fromObj || !toObj) {
+            return false;
+        }
+        return true;
     }
 }
