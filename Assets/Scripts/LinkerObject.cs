@@ -5,7 +5,8 @@ public class LinkerObject : MonoBehaviour {
 		Inactive,
 		Focused,
 		Linked,
-		Destroy
+		Destroy,
+		Falling
 	}
 
 	private SpriteRenderer _Sprite;
@@ -14,6 +15,11 @@ public class LinkerObject : MonoBehaviour {
 	private ELinkerState _LinkerState = ELinkerState.Inactive;
 	private LinkerLogic _LinkerLogic = null;
 	public SGridCoords _GridCoords;
+	private float _FallSpeed;
+	private float _FallStartTime;
+	private float _FallJourney;
+	private Vector3 _FallFromPosition;
+	private Vector3 _FallDestination;
 
 	public void Reset(LinkerLogic linkerLogic, SGridCoords gridCoords) {
 		_LinkerLogic = linkerLogic;
@@ -56,11 +62,34 @@ public class LinkerObject : MonoBehaviour {
 			case ELinkerState.Linked:
 				_Sprite.color = new Color(255f, 255f, 255f, 255f);
 			break;
+			case ELinkerState.Falling:
+				float distCovered = (Time.time - _FallStartTime) * _FallSpeed;
+				float fractionOfJourney = distCovered / _FallJourney;
+				transform.position = Vector3.Lerp(_FallFromPosition, _FallDestination, fractionOfJourney);
+				if (fractionOfJourney >= 1f) {
+					transform.position = _FallDestination;
+					_LinkerState = ELinkerState.Inactive;
+				}
+			break;
 		}
 	}
 
-	public bool ToBeDestroyed() {
+	public bool IsDestroyed() {
 		return _LinkerState == ELinkerState.Destroy;
+	}
+
+	public bool IsFalling() {
+		return _LinkerState == ELinkerState.Falling;
+	}
+
+	public void SetFalling(float fallSpeed, Vector3 fallDestination, SGridCoords destGridCoords) {
+		_FallSpeed = fallSpeed;
+		_FallStartTime = Time.time;
+		_FallFromPosition = gameObject.transform.position;
+		_FallDestination = fallDestination;
+		_FallJourney = Vector3.Distance(_FallFromPosition, _FallDestination);
+		_GridCoords = destGridCoords;
+		_LinkerState = ELinkerState.Falling;
 	}
 
 	public void SetFocused() {

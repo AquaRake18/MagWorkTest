@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
     public LevelSettings _Settings;
-    public float _FallSpeed = .6f;
+    public float _FallSpeed = 2.4f;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
@@ -20,7 +20,7 @@ public class Board : MonoBehaviour {
     }
 
     void Update() {
-        _FallLogic.Update(Time.deltaTime);
+        _FallLogic.Update();
     }
 
     private void PositionBoard() {

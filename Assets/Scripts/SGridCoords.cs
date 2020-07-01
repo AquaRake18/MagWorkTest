@@ -7,6 +7,8 @@
         _Row = row;
     }
 
+    public override string ToString() => $"SGridCoords({_Column}, {_Row})";
+
     public bool IsAdjacent(SGridCoords other) {
         if (other._Column == _Column - 1
             && other._Row == _Row - 1) {

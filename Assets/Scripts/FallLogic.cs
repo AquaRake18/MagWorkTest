@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class FallLogic : AFallLogic {
+﻿public class FallLogic : AFallLogic {
     private int _GridWidth;
     private int _GridHeight;
     private BoardTile[,] _BoardTiles;
@@ -24,18 +22,58 @@ public class FallLogic : AFallLogic {
     // AFallLogic
     public override void UnstableBoard() {
         _UnstableBoard = true;
-        for (int y = 0; y < _GridHeight; ++y) {
-            for (int x = 0; x < _GridWidth; ++x) {
-                if (_LinkerObjects[x, y].ToBeDestroyed()) {
-                    Debug.Log("Destroyed at (" + x + ", " + y + ")");
+        int emptyRows = 0;
+        for (int x = 0; x < _GridWidth; ++x) {
+            for (int y = _GridHeight - 1; y >= 0; --y) {
+                if (!_LinkerObjects[x, y]) {
+                    continue;
+                }
+                if (_LinkerObjects[x, y].IsDestroyed()) {
+                    ++emptyRows;
+                } else if (emptyRows > 0) {
+                    _LinkerObjects[x, y].SetFalling(
+                        _FallSpeed,
+                        _LinkerObjects[x, y + emptyRows].gameObject.transform.position,
+                        new SGridCoords(x, y + emptyRows)
+                    );
+                }
+            }
+            emptyRows = 0;
+        }
+        RefreshArrays();
+    }
+
+    // AFallLogic
+    public override bool IsUnstableBoard() {
+        return _UnstableBoard;
+    }
+
+    public void Update() {
+        if (!_UnstableBoard) {
+            return;
+        }
+        for (int x = 0; x < _GridWidth; ++x) {
+            for (int y = 0; y < _GridHeight; ++y) {
+                if (_LinkerObjects[x, y]
+                    && _LinkerObjects[x, y].IsFalling()) {
+                    return;
                 }
             }
         }
+        _UnstableBoard = false;
     }
 
-    public void Update(float deltaTime) {
-        if (!_UnstableBoard) {
-            return;
+    private void RefreshArrays() {
+        for (int x = 0; x < _GridWidth; ++x) {
+            for (int y = _GridHeight - 1; y >= 0; --y) {
+                LinkerObject obj = _LinkerObjects[x, y];
+                if (obj
+                    && !(obj._GridCoords._Column == x
+                    && obj._GridCoords._Row == y)) {
+                    _LinkerObjects[obj._GridCoords._Column, obj._GridCoords._Row] = obj;
+                    _LinkerObjects[x, y] = null;
+                }
+            }
         }
     }
 }

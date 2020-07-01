@@ -41,7 +41,10 @@ public class LinkerLogic {
     }
 
     public bool AddLinker(LinkerObject linkerObject) {
-        if (linkerObject == GetFocusedObject()) {
+        if (_FallLogic.IsUnstableBoard()) {
+            // ignore inputs if board hasn't settled yet
+            return false;
+        } else if (linkerObject == GetFocusedObject()) {
             // if compares to self, do nothing
             return false;
         } else if (_LinkedObjects.Contains(linkerObject)) {
@@ -80,6 +83,9 @@ public class LinkerLogic {
     }
 
     public void ConfirmLink() {
+        if (_FallLogic.IsUnstableBoard()) {
+            return;
+        }
         if (_LinkedObjects.Count < _MinimumLinks) {
             foreach (LinkerObject obj in _LinkedObjects) {
                 obj.CancelLink();
