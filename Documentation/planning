@@ -21,13 +21,13 @@ Basic functionality:
 
 __Wednesday__
 Game play:
-* Linking (8 directions)
+* Linking (same type)
 * Cancel current link
 * Match and remove
-* Adjacent logic
-* Fall logic
+* Linking (Adjacent restriction)
+* Collapse row
 * Actual spawning
-* Stable board
+* Stable board (states)
 
 
 __Thursday__
