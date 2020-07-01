@@ -505,6 +505,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Settings: {fileID: 2023996389}
+  _FallSpeed: 0.6
+  _TimeToDie: 0.1
   _BoardTilePrefab: {fileID: 6953911376855918421, guid: cc337d914a5eb46ada22cf52b5c38c9c,
     type: 3}
   _LinkerSpawnerPrefab: {fileID: 8258689522191014029, guid: 95bd3d5dfd1d54f7cb9ced737be09de7,
