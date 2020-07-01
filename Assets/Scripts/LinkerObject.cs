@@ -1,14 +1,6 @@
 ﻿using UnityEngine;
 
 public class LinkerObject : MonoBehaviour {
-	public enum ELinkerTypeID {
-		Red,
-		Blue,
-		Green,
-		Yellow,
-		Purple
-	}
-
 	public enum ELinkerState {
 		Inactive,
 		Focused,
@@ -21,7 +13,6 @@ public class LinkerObject : MonoBehaviour {
 
 	private ELinkerState _LinkerState = ELinkerState.Inactive;
 	private LinkerLogic _LinkerLogic = null;
-	public ELinkerTypeID _LinkerTypeID;
 	public SGridCoords _GridCoords;
 
 	public void Reset(LinkerLogic linkerLogic, SGridCoords gridCoords) {

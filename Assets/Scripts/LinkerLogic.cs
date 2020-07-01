@@ -45,7 +45,7 @@ public class LinkerLogic {
             return false;
         } else if (!HasActiveLink()
             || (!_LinkedObjects.Contains(linkerObject)
-            && linkerObject._LinkerTypeID == _LinkedObjects[0]._LinkerTypeID
+            && linkerObject.gameObject.CompareTag(_LinkedObjects[0].gameObject.tag)
             && IsAdjacent(_LinkedObjects[_LinkedObjects.Count - 1], linkerObject))) {
             // if new AND same type AND adjacent, successful link
             if (_LinkedObjects.Count > 0) {
