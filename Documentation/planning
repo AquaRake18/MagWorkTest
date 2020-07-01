@@ -25,6 +25,7 @@ Game play:
 * Cancel current link
 * Match and remove
 * Fall logic
+* Actual spawning
 * Stable board
 * Score
 * End condition: Moves and score
