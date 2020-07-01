@@ -24,6 +24,7 @@ Game play:
 * Linking (8 directions)
 * Cancel current link
 * Match and remove
+* Adjacent logic
 * Fall logic
 * Actual spawning
 * Stable board
