@@ -13,7 +13,6 @@ public class Board : MonoBehaviour {
     private List<LinkerSpawner> _Spawners = new List<LinkerSpawner>();
 
     void Start() {
-        _LinkerLogic.Initialize(_Settings._BoardWidth, _Settings._BoardHeight);
         PositionBoard();
         InstantiateLinkerSpawners();
         InstantiateTilesWithLinkers();

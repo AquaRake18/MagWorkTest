@@ -11,8 +11,6 @@ public class LinkerLogic {
     }
 
     private readonly int _MinimumLinks = 3;
-    private int _GridWidth = 0;
-    private int _GridHeight = 0;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
 
     private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
@@ -32,11 +30,6 @@ public class LinkerLogic {
             return _LinkedObjects[_LinkedObjects.Count - 1];
         }
         return null;
-    }
-
-    public void Initialize(int gridWidth, int gridHeight) {
-        _GridWidth = gridWidth;
-        _GridHeight = gridHeight;
     }
 
     public bool HasActiveLink() {
@@ -99,6 +92,6 @@ public class LinkerLogic {
         if (!fromObj || !toObj) {
             return false;
         }
-        return fromObj._GridCoords.IsAdjacent(_GridWidth, _GridHeight, toObj._GridCoords);
+        return fromObj._GridCoords.IsAdjacent(toObj._GridCoords);
     }
 }
