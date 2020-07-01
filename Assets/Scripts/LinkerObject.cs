@@ -59,6 +59,10 @@ public class LinkerObject : MonoBehaviour {
 		}
 	}
 
+	public bool ToBeDestroyed() {
+		return _LinkerState == ELinkerState.Destroy;
+	}
+
 	public void SetFocused() {
 		_LinkerState = ELinkerState.Focused;
 	}
