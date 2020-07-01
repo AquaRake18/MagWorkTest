@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 
 public class LinkerObject : MonoBehaviour {
+	public enum ELinkerState {
+		Inactive,
+		Focused,
+		Linked,
+		Destroy
+	}
+
 	private Vector3 _BeginTouchPosition;
     private Vector3 _EndTouchPosition;
     private float _Angle;
     private EDirection _Direction;
-	private bool _ActiveLink = false;
+	private ELinkerState _LinkerState = ELinkerState.Inactive;
 	public bool ActiveLink {
-		get { return _ActiveLink; }
+		get { return _LinkerState == ELinkerState.Focused || _LinkerState == ELinkerState.Linked; }
 	}
 
     void OnMouseDown() {
@@ -15,13 +22,13 @@ public class LinkerObject : MonoBehaviour {
 		ActivateLink();
     }
 
-	void OnMouseEnter() {
-	}
-
     void OnMouseUp() {
         _EndTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CalculateAngle();
     }
+
+	void OnMouseEnter() {
+	}
 
     private void CalculateAngle() {
         _Angle = Mathf.Atan2(
@@ -31,15 +38,21 @@ public class LinkerObject : MonoBehaviour {
         _Direction = Direction.AngleToDirection(_Angle);
     }
 
+	void Update() {
+		if (_LinkerState == ELinkerState.Destroy) {
+			Destroy(gameObject);
+		}
+	}
+
 	public void ActivateLink() {
-		_ActiveLink = true;
+		_LinkerState = ELinkerState.Focused;
 	}
 
 	public void CancelLink() {
-		_ActiveLink = false;
+		_LinkerState = ELinkerState.Inactive;
 	}
 
 	public void ConfirmLink() {
-		_ActiveLink = false;
+		_LinkerState = ELinkerState.Destroy;
 	}
 }
