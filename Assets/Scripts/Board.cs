@@ -46,13 +46,14 @@ public class Board : MonoBehaviour {
         _BoardTiles = new BoardTile[_Settings._BoardWidth, _Settings._BoardHeight];
         _LinkerObjects = new LinkerObject[_Settings._BoardWidth, _Settings._BoardHeight];
         int tileCount = 0;
-        for (int y = 0; y < _Settings._BoardHeight; ++y) {
+        int drawRow = _Settings._BoardHeight - 1;
+        for (int y = 0; y < _Settings._BoardHeight; ++y, --drawRow) {
             for (int x = 0; x < _Settings._BoardWidth; ++x) {
                 GameObject goTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
                         gameObject.transform.position.x + x * Layouts._BoardTileSize.x,
-                        gameObject.transform.position.y + y * Layouts._BoardTileSize.y,
+                        gameObject.transform.position.y + drawRow * Layouts._BoardTileSize.y,
                         0
                     ),
                     Quaternion.identity
