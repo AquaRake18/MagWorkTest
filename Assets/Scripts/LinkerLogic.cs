@@ -16,7 +16,6 @@ public class LinkerLogic {
     private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
         for (int index = 0; index < _LinkedObjects.Count; ++index) {
             if (_LinkedObjects[index] == linkerObject) {
-                // because last index has no next
                 if (index < _LinkedObjects.Count - 1) {
                     return new SRemoveRange(index + 1, _LinkedObjects.Count - (index + 1));
                 }

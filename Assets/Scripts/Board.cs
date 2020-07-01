@@ -3,19 +3,23 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
     public LevelSettings _Settings;
+    public float _FallSpeed = .6f;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
 
     private LinkerLogic _LinkerLogic = new LinkerLogic();
-    private BoardTile[,] _BoardTiles;
-    private LinkerObject[,] _LinkerObjects;
+    private FallLogic _FallLogic = new FallLogic();
     private List<LinkerSpawner> _Spawners = new List<LinkerSpawner>();
 
     void Start() {
         PositionBoard();
         InstantiateLinkerSpawners();
         InstantiateTilesWithLinkers();
+    }
+
+    void Update() {
+        _FallLogic.Update(Time.deltaTime);
     }
 
     private void PositionBoard() {
@@ -42,8 +46,8 @@ public class Board : MonoBehaviour {
     }
 
     private void InstantiateTilesWithLinkers() {
-        _BoardTiles = new BoardTile[_Settings._BoardWidth, _Settings._BoardHeight];
-        _LinkerObjects = new LinkerObject[_Settings._BoardWidth, _Settings._BoardHeight];
+        BoardTile[,] boardTiles = new BoardTile[_Settings._BoardWidth, _Settings._BoardHeight];
+        LinkerObject[,] linkerObjects = new LinkerObject[_Settings._BoardWidth, _Settings._BoardHeight];
         int tileCount = 0;
         int drawRow = _Settings._BoardHeight - 1;
         for (int y = 0; y < _Settings._BoardHeight; ++y, --drawRow) {
@@ -59,7 +63,7 @@ public class Board : MonoBehaviour {
                 );
                 goTile.name = "Tile_" + tileCount;
                 goTile.transform.parent = gameObject.transform;
-                _BoardTiles[x,y] = goTile.GetComponent<BoardTile>();
+                boardTiles[x,y] = goTile.GetComponent<BoardTile>();
                 ++tileCount;
 
                 GameObject linkerObjectType = _LinkerTypes[Random.Range(0, Mathf.Clamp(_LinkerTypes.Length, 0, _Settings._LinkerColors))];
@@ -68,10 +72,11 @@ public class Board : MonoBehaviour {
                     goTile.transform.position,
                     Quaternion.identity
                 );
-                goLinker.transform.parent = _BoardTiles[x,y].transform;
-                _LinkerObjects[x,y] = goLinker.GetComponent<LinkerObject>();
-                _LinkerObjects[x,y].Reset(_LinkerLogic, new SGridCoords(x, y));
+                goLinker.transform.parent = boardTiles[x,y].transform;
+                linkerObjects[x,y] = goLinker.GetComponent<LinkerObject>();
+                linkerObjects[x,y].Reset(_LinkerLogic, new SGridCoords(x, y));
             }
         }
+        _FallLogic.Initialize(_Settings._BoardWidth, _Settings._BoardHeight, boardTiles, linkerObjects, _FallSpeed);
     }
 }
