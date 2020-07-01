@@ -1,6 +1,14 @@
 ﻿using UnityEngine;
 
 public class LinkerObject : MonoBehaviour {
+	public enum ELinkerTypeID {
+		Red,
+		Blue,
+		Green,
+		Yellow,
+		Purple
+	}
+
 	public enum ELinkerState {
 		Inactive,
 		Focused,
@@ -8,26 +16,52 @@ public class LinkerObject : MonoBehaviour {
 		Destroy
 	}
 
+	private SpriteRenderer _Sprite;
+	private Color _DefaultColor;
+
 	private Vector3 _BeginTouchPosition;
     private Vector3 _EndTouchPosition;
     private float _Angle;
     private EDirection _Direction;
 	private ELinkerState _LinkerState = ELinkerState.Inactive;
-	public bool ActiveLink {
-		get { return _LinkerState == ELinkerState.Focused || _LinkerState == ELinkerState.Linked; }
+	private LinkerLogic _LinkerLogic = null;
+	public ELinkerTypeID _LinkerTypeID;
+	public int _ArrayID;
+
+	public void Reset(LinkerLogic linkerLogic, int arrayID) {
+		_LinkerLogic = linkerLogic;
+		_ArrayID = arrayID;
+	}
+
+	void Awake() {
+		_Sprite = gameObject.GetComponent<SpriteRenderer>();
+		_DefaultColor = _Sprite.color;
 	}
 
     void OnMouseDown() {
         _BeginTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		ActivateLink();
+		if (_LinkerLogic.AddLinker(this)) {
+			_LinkerState = ELinkerState.Focused;
+		}
     }
 
     void OnMouseUp() {
         _EndTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CalculateAngle();
+		_LinkerLogic.ConfirmLink();
     }
 
 	void OnMouseEnter() {
+		if (_LinkerLogic.HasActiveLink()
+			&& _LinkerLogic.AddLinker(this)) {
+			_LinkerState = ELinkerState.Focused;
+		}
+	}
+
+	void OnMouseExit() {
+		if (_LinkerState == ELinkerState.Focused) {
+			_LinkerState = ELinkerState.Linked;
+		}
 	}
 
     private void CalculateAngle() {
@@ -42,10 +76,17 @@ public class LinkerObject : MonoBehaviour {
 		if (_LinkerState == ELinkerState.Destroy) {
 			Destroy(gameObject);
 		}
-	}
-
-	public void ActivateLink() {
-		_LinkerState = ELinkerState.Focused;
+		switch (_LinkerState) {
+			case ELinkerState.Inactive:
+				_Sprite.color = _DefaultColor;
+			break;
+			case ELinkerState.Focused:
+				_Sprite.color = new Color(0f, 0f, 0f, 255f);
+			break;
+			case ELinkerState.Linked:
+				_Sprite.color = new Color(255f, 255f, 255f, 255f);
+			break;
+		}
 	}
 
 	public void CancelLink() {

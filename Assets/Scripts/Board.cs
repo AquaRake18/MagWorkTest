@@ -7,11 +7,13 @@ public class Board : MonoBehaviour {
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
 
+    private LinkerLogic _LinkerLogic = new LinkerLogic();
     private BoardTile[,] _BoardTiles;
     private LinkerObject[,] _LinkerObjects;
     private List<LinkerSpawner> _Spawners = new List<LinkerSpawner>();
 
     void Start() {
+        _LinkerLogic.Initialize(ref _LinkerObjects);
         PositionBoard();
         InstantiateLinkerSpawners();
         InstantiateTilesWithLinkers();
@@ -58,7 +60,6 @@ public class Board : MonoBehaviour {
                 goTile.name = "Tile_" + tileCount;
                 goTile.transform.parent = gameObject.transform;
                 _BoardTiles[x,y] = goTile.GetComponent<BoardTile>();
-                ++tileCount;
 
                 GameObject linkerObjectType = _LinkerTypes[Random.Range(0, Mathf.Clamp(_LinkerTypes.Length, 0, _Settings._LinkerColors))];
                 GameObject goLinker = Instantiate(
@@ -68,6 +69,8 @@ public class Board : MonoBehaviour {
                 );
                 goLinker.transform.parent = _BoardTiles[x,y].transform;
                 _LinkerObjects[x,y] = goLinker.GetComponent<LinkerObject>();
+                _LinkerObjects[x,y].Reset(_LinkerLogic, tileCount);
+                ++tileCount;
             }
         }
     }
