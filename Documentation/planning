@@ -27,16 +27,15 @@ Game play:
 * Fall logic
 * Actual spawning
 * Stable board
-* Score
-* End condition: Moves and score
-* Reshuffle (if no possible matches)
-* Void tiles
 
 
 __Thursday__
+* End condition: Moves and score
+* Reshuffle (if no possible matches)
 UI:
 * Level selection menu
 * Scrolling score text
+* Score from successful link
 * Total score
 * Goal score
 * Exclamations
@@ -52,5 +51,6 @@ __Saturday__
 
 __Sunday__
 * Pooling
+* Void tiles
 * Final touches
 * Delivery
