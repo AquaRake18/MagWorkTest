@@ -30,12 +30,11 @@ Game play:
 
 
 __Thursday__
-* Static spawning (every row from top)
 * Refactoring
+* Refill columns (from top)
 * End condition: Moves and score
-* Reshuffle (if no possible matches)
 UI:
-* Level selection menu
+* Score config
 * Scrolling score text
 * Score from successful link
 * Total score
@@ -45,6 +44,8 @@ UI:
 
 __Friday__
 * Level editor
+* Actual levels
+* Level selection menu
 
 
 __Saturday__
@@ -54,5 +55,8 @@ __Saturday__
 
 __Sunday__
 * Pooling
+* Reshuffle (if no possible matches)
+* 2nd look at circular dependency refactoring
 * Final touches
 * Delivery
+
