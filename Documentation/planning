@@ -25,31 +25,31 @@ Game play:
 * Cancel current link
 * Match and remove
 * Linking (Adjacent restriction)
-* Collapse row
-* Stable board (states)
+* Collapse collumn
+* Restrict user actions while columns are collapsing
 
 
 __Thursday__
 * Refactoring
 * Refill columns (from top)
-* End condition: Moves and score
 UI:
 * Score config
-* Scrolling score text
 * Score from successful link
-* Total score
-* Goal score
-* Exclamations
+* Current score
+* Target score
+* Scrolling score text (WIP)
 
 
 __Friday__
 * Level editor
 * Actual levels
+* End condition: Moves and score
 * Level selection menu
 
 
 __Saturday__
 * Art and juice
+* Exclamations
 * Accelerating fall speed
 
 
@@ -57,6 +57,7 @@ __Sunday__
 * Pooling
 * Reshuffle (if no possible matches)
 * 2nd look at circular dependency refactoring
+* Solve bug with scrolling score text positioning
 * Final touches
 * Delivery
 
