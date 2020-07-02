@@ -21,7 +21,7 @@ public class LinkerSpawner : MonoBehaviour {
     public List<LinkerObject> SpawnLinkers(int spawnCount) {
         List<LinkerObject> linkerList = new List<LinkerObject>();
         Vector3 spawnerPos = gameObject.transform.position;
-        int spawnRow = _GridCoords._Row + 1;
+        int spawnRow = _GridCoords._Row;
         for (int y = 0; y < spawnCount; ++y, ++spawnRow) {
             GameObject go = Instantiate(
                 _LinkerTypes[Random.Range(0, _LinkerTypes.Length)],

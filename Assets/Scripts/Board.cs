@@ -80,7 +80,7 @@ public class Board : MonoBehaviour {
             LinkerSpawner spawner = go.GetComponent<LinkerSpawner>();
             spawner.Initialize(
                 _LinkerLogic,
-                new SGridCoords(spawnerColumn, -1),
+                new SGridCoords(spawnerColumn, 0),
                 _LinkerTypes
             );
             linkerSpawners.Add(spawnerColumn, spawner);
