@@ -30,7 +30,8 @@ Game play:
 
 
 __Thursday__
-* Actual spawning
+* Static spawning (every row from top)
+* Refactoring
 * End condition: Moves and score
 * Reshuffle (if no possible matches)
 UI:
