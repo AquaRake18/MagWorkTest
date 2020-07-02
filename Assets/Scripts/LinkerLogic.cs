@@ -12,14 +12,17 @@ public class LinkerLogic {
     }
 
     private readonly int _MinimumLinks = 3;
+    private ScoreConfig _ScoreConfig;
     private FallLogic _FallLogic;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
 
     public LinkerLogic(
+        ScoreConfig scoreConfig,
         Vector3 boardPosition,
         SGridCoords boardSize,
         BoardTile[,] boardTiles,
         float fallSpeed) {
+        _ScoreConfig = scoreConfig;
         _FallLogic = new FallLogic(
             boardPosition,
             boardSize,
@@ -81,6 +84,7 @@ public class LinkerLogic {
             foreach (LinkerObject obj in _LinkedObjects) {
                 obj.ConfirmLink();
             }
+            _ScoreConfig.AddScore(_LinkedObjects.Count);
             _FallLogic.CollapseCollumns();
         }
         _LinkedObjects.Clear();

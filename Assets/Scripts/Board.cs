@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using TMPro;
 
 public class Board : MonoBehaviour {
     public LevelSettings _Settings;
+    public ScoreConfig _ScoreConfig;
     public float _FallSpeed = 2.4f;
-    public TextMeshProUGUI _CurrentScoreText;
-    public TextMeshProUGUI _GoalScoreText;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
@@ -16,8 +14,6 @@ public class Board : MonoBehaviour {
 
     void Awake() {
         _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings._LinkerColors, 0, _LinkerTypes.Length)).ToArray();
-        _CurrentScoreText.text = "0";
-        _GoalScoreText.text = _Settings._ClearScore.ToString();
     }
 
     void Start() {
@@ -25,6 +21,7 @@ public class Board : MonoBehaviour {
         BoardTile[,] boardTiles = InstantiateBackgroundTiles();
 
         _LinkerLogic = new LinkerLogic(
+            _ScoreConfig,
             gameObject.transform.position,
             new SGridCoords(_Settings._BoardWidth, _Settings._BoardHeight),
             boardTiles,
