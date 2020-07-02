@@ -41,7 +41,7 @@ public class LinkerLogic {
     }
 
     public bool AddLinker(LinkerObject linkerObject) {
-        if (_FallLogic.IsUnstableBoard()) {
+        if (_FallLogic.IsCollapsingCollumns()) {
             // ignore inputs if board hasn't settled yet
             return false;
         } else if (linkerObject == GetFocusedObject()) {
@@ -83,7 +83,7 @@ public class LinkerLogic {
     }
 
     public void ConfirmLink() {
-        if (_FallLogic.IsUnstableBoard()) {
+        if (_FallLogic.IsCollapsingCollumns()) {
             return;
         }
         if (_LinkedObjects.Count < _MinimumLinks) {
@@ -94,7 +94,7 @@ public class LinkerLogic {
             foreach (LinkerObject obj in _LinkedObjects) {
                 obj.ConfirmLink();
             }
-            _FallLogic.UnstableBoard();
+            _FallLogic.CollapseCollumns();
         }
         _LinkedObjects.Clear();
     }

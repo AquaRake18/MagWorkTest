@@ -1,4 +1,4 @@
 ﻿public abstract class AFallLogic {
-    public abstract void UnstableBoard();
-    public abstract bool IsUnstableBoard();
+    public abstract bool IsCollapsingCollumns();
+    public abstract void CollapseCollumns();
 }

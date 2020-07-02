@@ -4,7 +4,7 @@
     private BoardTile[,] _BoardTiles;
     private LinkerObject[,] _LinkerObjects;
     private float _FallSpeed;
-    private bool _UnstableBoard = false;
+    private bool _CollapsingCollumns = false;
 
     public void Initialize(
         int gridWidth,
@@ -20,8 +20,13 @@
     }
 
     // AFallLogic
-    public override void UnstableBoard() {
-        _UnstableBoard = true;
+    public override bool IsCollapsingCollumns() {
+        return _CollapsingCollumns;
+    }
+
+    // AFallLogic
+    public override void CollapseCollumns() {
+        _CollapsingCollumns = true;
         int emptyRows = 0;
         for (int x = 0; x < _GridWidth; ++x) {
             for (int y = _GridHeight - 1; y >= 0; --y) {
@@ -43,26 +48,6 @@
         RefreshArrays();
     }
 
-    // AFallLogic
-    public override bool IsUnstableBoard() {
-        return _UnstableBoard;
-    }
-
-    public void Update() {
-        if (!_UnstableBoard) {
-            return;
-        }
-        for (int x = 0; x < _GridWidth; ++x) {
-            for (int y = 0; y < _GridHeight; ++y) {
-                if (_LinkerObjects[x, y]
-                    && _LinkerObjects[x, y].IsFalling()) {
-                    return;
-                }
-            }
-        }
-        _UnstableBoard = false;
-    }
-
     private void RefreshArrays() {
         for (int x = 0; x < _GridWidth; ++x) {
             for (int y = _GridHeight - 1; y >= 0; --y) {
@@ -75,5 +60,20 @@
                 }
             }
         }
+    }
+
+    public void Update() {
+        if (!_CollapsingCollumns) {
+            return;
+        }
+        for (int x = 0; x < _GridWidth; ++x) {
+            for (int y = 0; y < _GridHeight; ++y) {
+                if (_LinkerObjects[x, y]
+                    && _LinkerObjects[x, y].IsFalling()) {
+                    return;
+                }
+            }
+        }
+        _CollapsingCollumns = false;
     }
 }
