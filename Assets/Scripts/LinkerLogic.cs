@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LinkerLogic {
     public readonly struct SRemoveRange {
@@ -10,30 +11,33 @@ public class LinkerLogic {
         }
     }
 
-    private AFallLogic _FallLogic;
     private readonly int _MinimumLinks = 3;
+    private FallLogic _FallLogic;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
 
-    public LinkerLogic(AFallLogic fallLogic) {
-        _FallLogic = fallLogic;
+    public LinkerLogic(
+        Vector3 boardPosition,
+        SGridCoords boardSize,
+        BoardTile[,] boardTiles,
+        float fallSpeed) {
+        _FallLogic = new FallLogic(
+            boardPosition,
+            boardSize,
+            boardTiles,
+            fallSpeed
+        );
     }
 
-    private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
-        for (int index = 0; index < _LinkedObjects.Count; ++index) {
-            if (_LinkedObjects[index] == linkerObject) {
-                if (index < _LinkedObjects.Count - 1) {
-                    return new SRemoveRange(index + 1, _LinkedObjects.Count - (index + 1));
-                }
-            }
-        }
-        return new SRemoveRange(0, 0);
+    public void SetSpawners(Dictionary<int, LinkerSpawner> linkerSpawners) {
+        _FallLogic.SetSpawners(linkerSpawners);
     }
 
-    private LinkerObject GetFocusedObject() {
-        if (_LinkedObjects.Count > 0) {
-            return _LinkedObjects[_LinkedObjects.Count - 1];
-        }
-        return null;
+    public void Start() {
+        _FallLogic.Start();
+    }
+
+    public void Update() {
+        _FallLogic.Update();
     }
 
     public bool HasActiveLink() {
@@ -65,23 +69,6 @@ public class LinkerLogic {
         return false;
     }
 
-    private void Unlink(LinkerObject linkerObject) {
-        if (linkerObject) {
-            linkerObject.CancelLink();
-            SRemoveRange removeRange = GetRangeFromNextToEnd(linkerObject);
-            for (int index = 0; index < _LinkedObjects.Count; ++index) {
-                if (index == removeRange._StartIndex - 1) {
-                    _LinkedObjects[index].SetFocused();
-                } else if (index >= removeRange._StartIndex) {
-                    _LinkedObjects[index].CancelLink();
-                }
-            }
-            if (removeRange._Count > 0) {
-                _LinkedObjects.RemoveRange(removeRange._StartIndex, removeRange._Count);
-            }
-        }
-    }
-
     public void ConfirmLink() {
         if (_FallLogic.IsCollapsingCollumns()) {
             return;
@@ -99,10 +86,45 @@ public class LinkerLogic {
         _LinkedObjects.Clear();
     }
 
-    public bool IsAdjacent(LinkerObject fromObj, LinkerObject toObj) {
+    private LinkerObject GetFocusedObject() {
+        if (_LinkedObjects.Count > 0) {
+            return _LinkedObjects[_LinkedObjects.Count - 1];
+        }
+        return null;
+    }
+
+    private bool IsAdjacent(LinkerObject fromObj, LinkerObject toObj) {
         if (!fromObj || !toObj) {
             return false;
         }
         return fromObj._GridCoords.IsAdjacent(toObj._GridCoords);
+    }
+
+    private void Unlink(LinkerObject linkerObject) {
+        if (linkerObject) {
+            linkerObject.CancelLink();
+            SRemoveRange removeRange = GetRangeFromNextToEnd(linkerObject);
+            for (int index = 0; index < _LinkedObjects.Count; ++index) {
+                if (index == removeRange._StartIndex - 1) {
+                    _LinkedObjects[index].SetFocused();
+                } else if (index >= removeRange._StartIndex) {
+                    _LinkedObjects[index].CancelLink();
+                }
+            }
+            if (removeRange._Count > 0) {
+                _LinkedObjects.RemoveRange(removeRange._StartIndex, removeRange._Count);
+            }
+        }
+    }
+
+    private SRemoveRange GetRangeFromNextToEnd(LinkerObject linkerObject) {
+        for (int index = 0; index < _LinkedObjects.Count; ++index) {
+            if (_LinkedObjects[index] == linkerObject) {
+                if (index < _LinkedObjects.Count - 1) {
+                    return new SRemoveRange(index + 1, _LinkedObjects.Count - (index + 1));
+                }
+            }
+        }
+        return new SRemoveRange(0, 0);
     }
 }

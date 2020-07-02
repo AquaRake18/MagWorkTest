@@ -1,35 +1,74 @@
-﻿public class FallLogic : AFallLogic {
-    private int _GridWidth;
-    private int _GridHeight;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+public class FallLogic {
+    private Vector3 _BoardPosition;
+    private SGridCoords _BoardSize;
     private BoardTile[,] _BoardTiles;
+    private Dictionary<int, LinkerSpawner> _LinkerSpawners;
     private LinkerObject[,] _LinkerObjects;
     private float _FallSpeed;
     private bool _CollapsingCollumns = false;
 
-    public void Initialize(
-        int gridWidth,
-        int gridHeight,
-        BoardTile[,] boardTiles,
-        LinkerObject[,] linkerObjects,
-        float fallSpeed) {
-        _GridWidth = gridWidth;
-        _GridHeight = gridHeight;
-        _BoardTiles = boardTiles;
-        _LinkerObjects = linkerObjects;
-        _FallSpeed = fallSpeed;
+    private readonly struct SRefillData {
+        public int _Column { get; }
+        public int _EmptySpaces { get; }
+
+        public SRefillData(int column, int emptySpaces) {
+            _Column = column;
+            _EmptySpaces = emptySpaces;
+        }
     }
 
-    // AFallLogic
-    public override bool IsCollapsingCollumns() {
+    public FallLogic(
+        Vector3 boardPosition,
+        SGridCoords boardSize,
+        BoardTile[,] boardTiles,
+        float fallSpeed) {
+        _BoardPosition = boardPosition;
+        _BoardSize = boardSize;
+        _BoardTiles = boardTiles;
+        _FallSpeed = fallSpeed;
+        _LinkerObjects = new LinkerObject[_BoardSize._Column, _BoardSize._Row];
+    }
+
+    public void SetSpawners(Dictionary<int, LinkerSpawner> linkerSpawners) {
+        _LinkerSpawners = linkerSpawners;
+    }
+
+    public void Start() {
+        List<SRefillData> refillDataList = new List<SRefillData>();
+        for (int column = 0; column < _BoardSize._Column; ++column) {
+            refillDataList.Add(new SRefillData(column, _BoardSize._Row));
+        }
+        RefillCollumns(refillDataList);
+    }
+
+    public void Update() {
+        if (!_CollapsingCollumns) {
+            return;
+        }
+        for (int x = 0; x < _BoardSize._Column; ++x) {
+            for (int y = 0; y < _BoardSize._Row; ++y) {
+                if (_LinkerObjects[x, y]
+                    && _LinkerObjects[x, y].IsFalling()) {
+                    return;
+                }
+            }
+        }
+        _CollapsingCollumns = false;
+    }
+
+    public bool IsCollapsingCollumns() {
         return _CollapsingCollumns;
     }
 
-    // AFallLogic
-    public override void CollapseCollumns() {
+    public void CollapseCollumns() {
         _CollapsingCollumns = true;
         int emptyRows = 0;
-        for (int x = 0; x < _GridWidth; ++x) {
-            for (int y = _GridHeight - 1; y >= 0; --y) {
+        List<SRefillData> refillDataList = new List<SRefillData>();
+        for (int x = 0; x < _BoardSize._Column; ++x) {
+            for (int y = _BoardSize._Row - 1; y >= 0; --y) {
                 if (!_LinkerObjects[x, y]) {
                     continue;
                 }
@@ -43,37 +82,50 @@
                     );
                 }
             }
+            if (emptyRows > 0) {
+                refillDataList.Add(new SRefillData(x, emptyRows));
+            }
             emptyRows = 0;
         }
         RefreshArrays();
+        RefillCollumns(refillDataList);
     }
 
     private void RefreshArrays() {
-        for (int x = 0; x < _GridWidth; ++x) {
-            for (int y = _GridHeight - 1; y >= 0; --y) {
+        for (int x = 0; x < _BoardSize._Column; ++x) {
+            for (int y = _BoardSize._Row - 1; y >= 0; --y) {
                 LinkerObject obj = _LinkerObjects[x, y];
+                int destX = obj._GridCoords._Column;
+                int destY = obj._GridCoords._Row;
                 if (obj
-                    && !(obj._GridCoords._Column == x
-                    && obj._GridCoords._Row == y)) {
-                    _LinkerObjects[obj._GridCoords._Column, obj._GridCoords._Row] = obj;
+                    && !(destX == x
+                    && destY == y)) {
+                    _LinkerObjects[destX, destY] = obj;
                     _LinkerObjects[x, y] = null;
+                    obj.gameObject.transform.parent = _BoardTiles[destX, destY].gameObject.transform;
                 }
             }
         }
     }
 
-    public void Update() {
-        if (!_CollapsingCollumns) {
-            return;
-        }
-        for (int x = 0; x < _GridWidth; ++x) {
-            for (int y = 0; y < _GridHeight; ++y) {
-                if (_LinkerObjects[x, y]
-                    && _LinkerObjects[x, y].IsFalling()) {
-                    return;
+    private void RefillCollumns(List<SRefillData> refillDataList) {
+        foreach (SRefillData refillData in refillDataList) {
+            LinkerSpawner spawner = _LinkerSpawners[refillData._Column];
+            if (spawner) {
+                List<LinkerObject> linkerObjects = spawner.SpawnLinkers(refillData._EmptySpaces);
+                for (int spawnIndex = 0; spawnIndex < linkerObjects.Count; ++spawnIndex) {
+                    LinkerObject linker = linkerObjects[spawnIndex];
+                    SGridCoords destCoords = new SGridCoords(refillData._Column, refillData._EmptySpaces - 1 - spawnIndex);
+                    linker._GridCoords = destCoords;
+                    _LinkerObjects[destCoords._Column, destCoords._Row] = linker;
+                    linker.gameObject.transform.parent = _BoardTiles[destCoords._Column, destCoords._Row].gameObject.transform;
+                    linker.SetFalling(
+                        _FallSpeed,
+                        _BoardTiles[destCoords._Column, destCoords._Row].gameObject.transform.position,
+                        destCoords
+                    );
                 }
             }
         }
-        _CollapsingCollumns = false;
     }
 }

@@ -21,9 +21,8 @@ public class LinkerObject : MonoBehaviour {
 	private Vector3 _FallFromPosition;
 	private Vector3 _FallDestination;
 
-	public void Reset(LinkerLogic linkerLogic, SGridCoords gridCoords) {
+	public void Initialize(LinkerLogic linkerLogic) {
 		_LinkerLogic = linkerLogic;
-		_GridCoords = gridCoords;
 	}
 
 	void Awake() {
