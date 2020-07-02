@@ -81,10 +81,12 @@ public class LinkerLogic {
                 obj.CancelLink();
             }
         } else {
+            List<Vector3> positions = new List<Vector3>();
             foreach (LinkerObject obj in _LinkedObjects) {
+                positions.Add(obj.transform.position);
                 obj.ConfirmLink();
             }
-            _ScoreConfig.AddScore(_LinkedObjects.Count);
+            _ScoreConfig.AddScore(positions);
             _FallLogic.CollapseCollumns();
         }
         _LinkedObjects.Clear();
