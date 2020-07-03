@@ -13,12 +13,12 @@ public class ScoreConfig : MonoBehaviour {
     public GameObject _ScrollingTextPrefab;
 
     private int _TargetScore = 9999;
-    private int _CurrentScore = 0;
+    private LevelProgress _LevelProgress;
 
-    public void Initialize(LevelSettings settings) {
+    public void Initialize(LevelSettings settings, LevelProgress levelProgress) {
         _TargetScore = settings.TargetScore;
-        _CurrentScore = 0;
-        _CurrentScoreText.text = "" + _CurrentScore;
+        _LevelProgress = levelProgress;
+        _CurrentScoreText.text = "" + _LevelProgress.CurrentScore;
         _TargetScoreText.text = "" + _TargetScore;
     }
 
@@ -36,8 +36,8 @@ public class ScoreConfig : MonoBehaviour {
                 linkInTier = 0;
             }
         }
-        _CurrentScore += newScore;
-        _CurrentScoreText.text = "" + _CurrentScore;
+        _LevelProgress.CurrentScore += newScore;
+        _CurrentScoreText.text = "" + _LevelProgress.CurrentScore;
     }
 
     public void AddScrollingText(int score, Vector3 position) {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Board : MonoBehaviour {
     public int _FPS = 60;
@@ -12,11 +13,15 @@ public class Board : MonoBehaviour {
 
     private LevelSettings _Settings;
     private LinkerLogic _LinkerLogic;
+    private LevelProgress _LevelProgress;
+    private EndGameCondition _EndGameCondition;
 
     void Awake() {
         Application.targetFrameRate = _FPS;
         _Settings = new LevelSettings();
-        _ScoreConfig.Initialize(_Settings);
+        _LevelProgress = new LevelProgress();
+        _ScoreConfig.Initialize(_Settings, _LevelProgress);
+        _EndGameCondition = new EndGameCondition(EGameMode.Score, _Settings, _LevelProgress);
     }
 
     void Start() {
@@ -37,7 +42,14 @@ public class Board : MonoBehaviour {
     }
 
     void Update() {
-        _LinkerLogic.Update();
+        if (!_EndGameCondition.ConditionsMet()) {
+            _LinkerLogic.Update();
+        } else {
+            UserData data = SaveSystem.LoadUserData();
+            ++data._CurrentLevel;
+            SaveSystem.SaveUserData(data);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void PositionBoard() {
