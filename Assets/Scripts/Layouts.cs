@@ -5,8 +5,8 @@ public static class Layouts {
 
     public static Vector3 GetBoardPos(LevelSettings settings) {
         return new Vector3(
-            _BoardTileSize.x / 2f * (settings._MaxWidth - settings._BoardWidth),
-            .5f + _BoardTileSize.y / 2f * (settings._MaxHeight - settings._BoardHeight),
+            _BoardTileSize.x / 2f * (settings._MaxWidth - settings.BoardWidth),
+            .5f + _BoardTileSize.y / 2f * (settings._MaxHeight - settings.BoardHeight),
             0
         );
     }

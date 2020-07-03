@@ -1,20 +1,22 @@
-﻿using UnityEngine;
-
-public class LevelSettings : MonoBehaviour {
+﻿public class LevelSettings {
     public readonly int _MaxWidth = 9;
     public readonly int _MaxHeight = 9;
-    [Range(3, 9)]
-    public int _BoardWidth = 6;
-    [Range(3, 9)]
-    public int _BoardHeight = 9;
-    [Range(2,5)]
-    public int _LinkerColors = 5;
-    public int _TargetScore = 1000;
-    public int _Moves = 24;
+
+    private int _BoardWidth = 6;
+    private int _BoardHeight = 9;
+    private int _LinkerColors = 5;
+    private int _TargetScore = 1000;
+    private int _Moves = 24;
+
+    public int BoardWidth { get { return _BoardWidth; } }
+    public int BoardHeight { get { return _BoardHeight; } }
+    public int LinkerColors { get { return _LinkerColors; } }
+    public int TargetScore { get { return _TargetScore; } }
+    public int Moves { get { return _Moves; } }
 
     private LevelCollection _LevelData;
 
-    void Awake() {
+    public LevelSettings() {
         UserData userData = SaveSystem.LoadUserData();
         if (userData != null) {
             _LevelData = SaveSystem.LoadLevels();

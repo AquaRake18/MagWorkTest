@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
     public int _FPS = 60;
-    public LevelSettings _Settings;
     public ScoreConfig _ScoreConfig;
     public float _FallSpeed = 2.4f;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject[] _LinkerTypes;
 
+    private LevelSettings _Settings;
     private LinkerLogic _LinkerLogic;
 
     void Awake() {
         Application.targetFrameRate = _FPS;
+        _Settings = new LevelSettings();
+        _ScoreConfig.Initialize(_Settings);
     }
 
     void Start() {
-        _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings._LinkerColors, 0, _LinkerTypes.Length)).ToArray();
+        _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings.LinkerColors, 0, _LinkerTypes.Length)).ToArray();
         PositionBoard();
         BoardTile[,] boardTiles = InstantiateBackgroundTiles();
 
         _LinkerLogic = new LinkerLogic(
             _ScoreConfig,
             gameObject.transform.position,
-            new SGridCoords(_Settings._BoardWidth, _Settings._BoardHeight),
+            new SGridCoords(_Settings.BoardWidth, _Settings.BoardHeight),
             boardTiles,
             _FallSpeed
         );
@@ -43,11 +45,11 @@ public class Board : MonoBehaviour {
     }
 
     private BoardTile[,] InstantiateBackgroundTiles() {
-        BoardTile[,] boardTiles = new BoardTile[_Settings._BoardWidth, _Settings._BoardHeight];
+        BoardTile[,] boardTiles = new BoardTile[_Settings.BoardWidth, _Settings.BoardHeight];
         int tileCount = 0;
-        int drawRow = _Settings._BoardHeight - 1;
-        for (int y = 0; y < _Settings._BoardHeight; ++y, --drawRow) {
-            for (int x = 0; x < _Settings._BoardWidth; ++x) {
+        int drawRow = _Settings.BoardHeight - 1;
+        for (int y = 0; y < _Settings.BoardHeight; ++y, --drawRow) {
+            for (int x = 0; x < _Settings.BoardWidth; ++x) {
                 GameObject goTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
@@ -68,12 +70,12 @@ public class Board : MonoBehaviour {
 
     private Dictionary<int, LinkerSpawner> InstantiateLinkerSpawners() {
         Dictionary<int, LinkerSpawner> linkerSpawners = new Dictionary<int, LinkerSpawner>();
-        for (int spawnerColumn = 0; spawnerColumn < _Settings._BoardWidth; ++spawnerColumn) {
+        for (int spawnerColumn = 0; spawnerColumn < _Settings.BoardWidth; ++spawnerColumn) {
             GameObject go = Instantiate(
                 _LinkerSpawnerPrefab,
                 new Vector3(
                     gameObject.transform.position.x + spawnerColumn * Layouts._BoardTileSize.x,
-                    gameObject.transform.position.y + _Settings._BoardHeight * Layouts._BoardTileSize.y,
+                    gameObject.transform.position.y + _Settings.BoardHeight * Layouts._BoardTileSize.y,
                     0
                 ),
                 Quaternion.identity
