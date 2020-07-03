@@ -41,10 +41,11 @@ UI:
 
 
 __Friday__
+* Save & Load
 * Level editor
 * Actual levels
-* End condition: Moves and score
 * Level selection menu
+* End condition: Moves and score
 
 
 __Saturday__
@@ -56,6 +57,7 @@ __Saturday__
 __Sunday__
 * Pooling
 * Reshuffle (if no possible matches)
+* Refactor scene loading away from Board
 * 2nd look at circular dependency refactoring
 * Solve bug with scrolling score text positioning
 * Final touches
