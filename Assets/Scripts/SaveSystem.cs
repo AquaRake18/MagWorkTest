@@ -5,20 +5,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem {
 	private static string _Path = Application.persistentDataPath + "/levels.dat";
 
-	public static void SaveLevels(LevelCollection levelCollection) {
+	public static void SaveLevels(LevelData[] storedLevels) {
 		BinaryFormatter formatter = new BinaryFormatter();
 		FileStream stream = new FileStream(_Path, FileMode.Create);
 
-		formatter.Serialize(stream, levelCollection);
+		formatter.Serialize(stream, storedLevels);
 		stream.Close();
 	}
 
-	public static LevelCollection LoadLevels() {
+	public static LevelData[] LoadLevels() {
 		if (File.Exists(_Path)) {
 			BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(_Path, FileMode.Open);
 
-			LevelCollection data = formatter.Deserialize(stream) as LevelCollection;
+			LevelData[] data = formatter.Deserialize(stream) as LevelData[];
 			stream.Close();
 			return data;
 		} else {

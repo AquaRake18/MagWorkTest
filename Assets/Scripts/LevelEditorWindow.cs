@@ -21,7 +21,7 @@ public class LevelEditorWindow : EditorWindow {
     private readonly int _LevelSliderMin = 1;
     private int _LevelSliderMax;
 
-    private LevelCollection _LevelCollection = null;
+    private LevelCollection _LevelCollection;
 
     [MenuItem("Window/Linker Game/Level Editor")]
     public static void ShowWindow() {
@@ -48,10 +48,11 @@ public class LevelEditorWindow : EditorWindow {
                 LoadLevel();
             }
             _LevelSliderValue = EditorGUILayout.IntSlider(
+                "Level Selector",
                 _LevelSliderValue,
                 _LevelSliderMin,
                 _LevelSliderMax,
-                GUILayout.Width(260)
+                GUILayout.Width(310)
             );
         }
         EditorGUI.EndDisabledGroup();
@@ -62,7 +63,7 @@ public class LevelEditorWindow : EditorWindow {
         {
             GUILayout.Label("Level: " + _LevelID, EditorStyles.boldLabel);
             _Width = EditorGUILayout.IntSlider(
-                "Board width",
+                "Board Width",
                 _Width,
                 _MinWidth,
                 _MaxWidth,
@@ -82,8 +83,8 @@ public class LevelEditorWindow : EditorWindow {
                 _MaxLinkerColors,
                 GUILayout.Width(260)
             );
-            _TargetScore = EditorGUILayout.IntField("Target score:", _TargetScore);
-            _Moves = EditorGUILayout.IntField("Moves:", _Moves);
+            _TargetScore = EditorGUILayout.IntField("Target Score", _TargetScore);
+            _Moves = EditorGUILayout.IntField("Moves", _Moves);
             if (GUILayout.Button("Save", GUILayout.Width(64f))) {
                 SaveLevel();
             }
@@ -93,18 +94,11 @@ public class LevelEditorWindow : EditorWindow {
 
     private void ReloadLevelCollection() {
         _EditingLevel = false;
-        _LevelCollection = SaveSystem.LoadLevels();
-        Debug.Log("Reload");
-        if (_LevelCollection == null) {
-            _LevelCollection = new LevelCollection(null);
-            if (_LevelCollection._StoredLevels != null) {
-                _LevelSliderMax = _LevelCollection._StoredLevels.Length;
-            } else {
-                _LevelSliderMax = 1;
-            }
-            Debug.Log("Loaded levels = " + _LevelSliderMax);
+        _LevelCollection = new LevelCollection(SaveSystem.LoadLevels());
+        if (_LevelCollection._StoredLevels != null) {
+            _LevelSliderMax = _LevelCollection._StoredLevels.Length;
         } else {
-            Debug.Log("LevelCollection is NULL");
+            _LevelSliderMax = 1;
         }
     }
 
@@ -119,13 +113,14 @@ public class LevelEditorWindow : EditorWindow {
     }
 
     private void LoadLevel() {
+        LevelData storedData = _LevelCollection._StoredLevels[_LevelSliderValue - 1];
         _EditingLevel = true;
-        _LevelID = GetNextLevelID();
-        _Width = 3;
-        _Height = 3;
-        _LinkerColors = 5;
-        _TargetScore = 10000;
-        _Moves = 10;
+        _LevelID = storedData._LevelID;
+        _Width = storedData._Width;
+        _Height = storedData._Height;
+        _LinkerColors = storedData._LinkerColors;
+        _TargetScore = storedData._TargetScore;
+        _Moves = storedData._Moves;
     }
 
     private void SaveLevel() {
@@ -138,7 +133,7 @@ public class LevelEditorWindow : EditorWindow {
             _Moves
         );
         if (_LevelCollection.AddLevel(editData)) {
-            SaveSystem.SaveLevels(_LevelCollection);
+            SaveSystem.SaveLevels(_LevelCollection._StoredLevels);
             ReloadLevelCollection();
         }
     }
