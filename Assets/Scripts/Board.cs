@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 public class Board : MonoBehaviour {
+    public int _FPS = 60;
     public LevelSettings _Settings;
     public ScoreConfig _ScoreConfig;
     public float _FallSpeed = 2.4f;
@@ -11,6 +12,10 @@ public class Board : MonoBehaviour {
     public GameObject[] _LinkerTypes;
 
     private LinkerLogic _LinkerLogic;
+
+    void Awake() {
+        Application.targetFrameRate = _FPS;
+    }
 
     void Start() {
         _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings._LinkerColors, 0, _LinkerTypes.Length)).ToArray();
