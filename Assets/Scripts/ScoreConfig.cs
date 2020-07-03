@@ -16,7 +16,7 @@ public class ScoreConfig : MonoBehaviour {
     private int _CurrentScore = 0;
 
     void Awake() {
-        _TargetScore = gameObject.GetComponent<LevelSettings>()._ClearScore;
+        _TargetScore = gameObject.GetComponent<LevelSettings>()._TargetScore;
         _CurrentScore = 0;
         _CurrentScoreText.text = "" + _CurrentScore;
         _TargetScoreText.text = "" + _TargetScore;

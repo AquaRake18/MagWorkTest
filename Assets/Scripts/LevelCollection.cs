@@ -74,14 +74,23 @@ public class LevelCollection {
 
     private bool ReplaceLevel(LevelData levelData) {
         if (levelData != null
-            && _StoredLevels != null) {
+            && _StoredLevels != null
+            && levelData._LevelID <= _StoredLevels.Length) {
             _StoredLevels[levelData._LevelID - 1] = levelData;
             return true;
         }
         return false;
     }
 
-    public Dictionary<int, LevelData> GetLevels() {
+    public LevelData GetLevel(int levelID) {
+        if (_StoredLevels != null
+            && levelID <= _StoredLevels.Length) {
+            return _StoredLevels[levelID - 1];
+        }
+        return null;
+    }
+
+    public Dictionary<int, LevelData> GetLevelList() {
         Dictionary<int, LevelData> levelCollection = new Dictionary<int, LevelData>();
         if (_StoredLevels != null) {
             for (int levelIndex = 0; levelIndex < _StoredLevels.Length; ++levelIndex) {

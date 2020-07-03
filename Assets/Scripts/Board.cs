@@ -12,11 +12,8 @@ public class Board : MonoBehaviour {
 
     private LinkerLogic _LinkerLogic;
 
-    void Awake() {
-        _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings._LinkerColors, 0, _LinkerTypes.Length)).ToArray();
-    }
-
     void Start() {
+        _LinkerTypes = _LinkerTypes.Take(Mathf.Clamp(_Settings._LinkerColors, 0, _LinkerTypes.Length)).ToArray();
         PositionBoard();
         BoardTile[,] boardTiles = InstantiateBackgroundTiles();
 

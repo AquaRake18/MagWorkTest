@@ -97,7 +97,7 @@ public class LevelEditorWindow : EditorWindow {
 
     private void ReloadLevelCollection() {
         _EditingLevel = false;
-        _LevelCollection = new LevelCollection(SaveSystem.LoadLevels());
+        _LevelCollection = SaveSystem.LoadLevels();
         if (_LevelCollection._StoredLevels != null) {
             _LevelSliderMax = _LevelCollection._StoredLevels.Length;
         } else {
