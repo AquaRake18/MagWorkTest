@@ -61,6 +61,9 @@ public class LevelEditorWindow : EditorWindow {
 
         EditorGUI.BeginDisabledGroup(!_EditingLevel);
         {
+            if (GUILayout.Button("Delete", GUILayout.Width(64f))) {
+                DeleteLevel();
+            }
             GUILayout.Label("Level: " + _LevelID, EditorStyles.boldLabel);
             _Width = EditorGUILayout.IntSlider(
                 "Board Width",
@@ -133,6 +136,13 @@ public class LevelEditorWindow : EditorWindow {
             _Moves
         );
         if (_LevelCollection.AddLevel(editData)) {
+            SaveSystem.SaveLevels(_LevelCollection._StoredLevels);
+            ReloadLevelCollection();
+        }
+    }
+
+    private void DeleteLevel() {
+        if (_LevelCollection.DeleteLevel(_LevelID)) {
             SaveSystem.SaveLevels(_LevelCollection._StoredLevels);
             ReloadLevelCollection();
         }

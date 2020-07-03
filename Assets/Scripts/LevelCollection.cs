@@ -51,6 +51,27 @@ public class LevelCollection {
         return false;
     }
 
+    public bool DeleteLevel(int levelID) {
+        if (_StoredLevels != null
+            && levelID <= _StoredLevels.Length) {
+            bool found = false;
+            List<LevelData> list = new List<LevelData>();
+            for (int levelIndex = 0; levelIndex < _StoredLevels.Length; ++levelIndex) {
+                if (_StoredLevels[levelIndex]._LevelID == levelID) {
+                    found = true;
+                } else if (found) {
+                    --_StoredLevels[levelIndex]._LevelID;
+                    list.Add(_StoredLevels[levelIndex]);
+                } else {
+                    list.Add(_StoredLevels[levelIndex]);
+                }
+            }
+            _StoredLevels = list.ToArray();
+            return true;
+        }
+        return false;
+    }
+
     private bool ReplaceLevel(LevelData levelData) {
         if (levelData != null
             && _StoredLevels != null) {
