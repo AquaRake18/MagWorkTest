@@ -14,9 +14,4 @@ public class MainMenu : MonoBehaviour {
     public void QuitGame() {
         Application.Quit();
     }
-
-    public void SelectLevel() {
-        UserData data = new UserData(1);
-        SaveSystem.SaveUserData(data);
-    }
 }

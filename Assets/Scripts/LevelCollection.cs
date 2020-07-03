@@ -6,6 +6,16 @@ using UnityEngine;
 public class LevelCollection {
     public LevelData[] _StoredLevels;
 
+    public int Count {
+        get {
+            if (_StoredLevels == null) {
+                return 0;
+            } else {
+                return _StoredLevels.Length;
+            }
+        }
+    }
+
     public LevelCollection(LevelData[] levelData) {
         if (!ValidateLevels(levelData)) {
             Debug.LogError("Failed to load leveldata due mismatch in levelID's.");
