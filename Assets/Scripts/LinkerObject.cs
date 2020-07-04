@@ -59,7 +59,7 @@ public class LinkerObject : MonoBehaviour {
 				_Sprite.color = new Color(0f, 0f, 0f, 255f);
 			break;
 			case ELinkerState.Linked:
-				_Sprite.color = new Color(255f, 255f, 255f, 255f);
+				_Sprite.color = new Color(255f, 0f, 128f, 255f);
 			break;
 			case ELinkerState.Falling:
 				float distCovered = (Time.time - _FallStartTime) * _FallSpeed;

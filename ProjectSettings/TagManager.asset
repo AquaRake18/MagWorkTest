@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LinkerTypeBlue
-  - LinkerTypeRed
-  - LinkerTypeGreen
-  - LinkerTypeYellow
-  - LinkerTypePurple
+  - LinkerOyster
+  - LinkerCrab
+  - LinkerStarfish
+  - LinkerTurbot
+  - LinkerAurelia
   layers:
   - Default
   - TransparentFX
