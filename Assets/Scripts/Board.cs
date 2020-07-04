@@ -53,7 +53,8 @@ public class Board : MonoBehaviour {
     }
 
     private void PositionBoard() {
-        gameObject.transform.position = Layouts.GetBoardPos(_Settings);
+        gameObject.transform.position += Layouts.GetBoardPos(_Settings);
+        Layouts.UpdateCameraZoom(_Settings);
     }
 
     private BoardTile[,] InstantiateBackgroundTiles() {
