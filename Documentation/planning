@@ -16,7 +16,7 @@ Gitignore
 Basic functionality:
 * Dynamic sized board
 * Spawners
-* Game objects
+* Linker game objects
 
 
 __Wednesday__
@@ -49,8 +49,17 @@ __Friday__
 
 
 __Saturday__
-* Art and juice
+Art and juice
+* Create new linker sprites
+* Update UI
+* World BG and board tiles
+* Simple animations for Linker states
+* (Add Googly Eyes that track player)
+* (Add eye brows with emotions)
+* Fitting font
 * Exclamations
+Misc
+* Unforeseen size issue
 * Accelerating fall speed
 
 
@@ -60,6 +69,8 @@ __Sunday__
 * Refactor scene loading away from Board
 * 2nd look at circular dependency refactoring
 * Solve bug with scrolling score text positioning
+* Look into lose level on out of moves
+* Stars and star scores
 * Final touches
 * Delivery
 
