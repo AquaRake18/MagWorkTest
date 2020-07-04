@@ -52,7 +52,7 @@ __Saturday__
 Art and juice
 * Create new linker sprites
 * Update UI
-* World BG and board tiles
+* Board tile BG
 * Simple animations for Linker states
 * (Add Googly Eyes that track player)
 * (Add eye brows with emotions)
@@ -70,6 +70,7 @@ __Sunday__
 * 2nd look at circular dependency refactoring
 * Solve bug with scrolling score text positioning
 * Look into lose level on out of moves
+* Reposition sprite mask
 * Stars and star scores
 * Final touches
 * Delivery
