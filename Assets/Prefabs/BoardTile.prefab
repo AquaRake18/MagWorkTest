@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4919658260749202472}
-  - component: {fileID: 153717790333858650}
   - component: {fileID: 7929808764900912748}
+  - component: {fileID: 9084809470564584819}
   m_Layer: 0
   m_Name: BoardTile
   m_TagString: Untagged
@@ -32,7 +32,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &153717790333858650
+--- !u!114 &7929808764900912748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953911376855918421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae151d5df07a848548514325083de16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TileState: 0
+--- !u!212 &9084809470564584819
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,11 +81,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2002252623
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be833b10ec57147dab6eb9939dfbd74d, type: 3}
-  m_Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  m_Sprite: {fileID: 21300000, guid: fd449dc22fe7c4b1aad43114130d5522, type: 3}
+  m_Color: {r: 0.6132076, g: 0.5609008, b: 0.3268512, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -82,17 +95,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7929808764900912748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953911376855918421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae151d5df07a848548514325083de16d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _TileState: 0
-  _LinkerObject: {fileID: 0}
