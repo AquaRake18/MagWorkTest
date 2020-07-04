@@ -55,3 +55,9 @@ TagManager:
   - name: LinkerObject
     uniqueID: 1136328135
     locked: 0
+  - name: Eyes
+    uniqueID: 1315726617
+    locked: 0
+  - name: Pupil
+    uniqueID: 2654233267
+    locked: 0
