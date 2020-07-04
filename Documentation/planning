@@ -57,13 +57,13 @@ Art and juice
 * (Add Googly Eyes that track player)
 * (Add eye brows with emotions)
 * Fitting font
-* Exclamations
 Misc
 * Unforeseen size issue
-* Accelerating fall speed
 
 
 __Sunday__
+* Exclamations
+* Accelerating fall speed
 * Pooling
 * Reshuffle (if no possible matches)
 * Refactor scene loading away from Board
