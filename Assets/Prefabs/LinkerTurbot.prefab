@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3011114768386760428}
   - component: {fileID: 2067522501453917278}
   - component: {fileID: 5867640083429407601}
+  - component: {fileID: 8846820877590244650}
   m_Layer: 0
   m_Name: LinkerTurbot
   m_TagString: LinkerTurbot
@@ -111,3 +112,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460c5f4722b294f5b97109f503f34efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!111 &8846820877590244650
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086177302793967712}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 478cd3c6a955248f0976d29efdfa2791, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 478cd3c6a955248f0976d29efdfa2791, type: 2}
+  - {fileID: 7400000, guid: 87d721b4a811346419a655bad727ce2d, type: 2}
+  - {fileID: 7400000, guid: 10f8dba2316c94488abd85bf215f47c2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

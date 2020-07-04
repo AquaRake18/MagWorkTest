@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
 public class LinkerObject : MonoBehaviour {
-	public enum ELinkerState {
-		Inactive,
+	public enum ELinkerState : int {
+		Idle = 0,
 		Focused,
 		Linked,
 		Destroy,
 		Falling
 	}
 
-	private SpriteRenderer _Sprite;
-	private Color _DefaultColor;
+	private Animation _Animaton;
 
-	private ELinkerState _LinkerState = ELinkerState.Inactive;
+	private ELinkerState _LinkerState;
 	private LinkerLogic _LinkerLogic = null;
 	public SGridCoords _GridCoords;
 	private float _FallSpeed;
@@ -26,13 +25,14 @@ public class LinkerObject : MonoBehaviour {
 	}
 
 	void Awake() {
-		_Sprite = gameObject.GetComponent<SpriteRenderer>();
-		_DefaultColor = _Sprite.color;
+		_Animaton = gameObject.GetComponent<Animation>();
+		_Animaton["LinkerIdle"].speed = 0.15f;
+		SetState(ELinkerState.Idle);
 	}
 
     void OnMouseDown() {
 		if (_LinkerLogic.AddLinker(this)) {
-			_LinkerState = ELinkerState.Focused;
+			SetState(ELinkerState.Focused);
 		}
     }
 
@@ -43,33 +43,21 @@ public class LinkerObject : MonoBehaviour {
 	void OnMouseEnter() {
 		if (_LinkerLogic.HasActiveLink()
 			&& _LinkerLogic.AddLinker(this)) {
-			_LinkerState = ELinkerState.Focused;
+			SetState(ELinkerState.Focused);
 		}
 	}
 
 	void Update() {
 		if (_LinkerState == ELinkerState.Destroy) {
 			Destroy(gameObject);
-		}
-		switch (_LinkerState) {
-			case ELinkerState.Inactive:
-				_Sprite.color = _DefaultColor;
-			break;
-			case ELinkerState.Focused:
-				_Sprite.color = new Color(0f, 0f, 0f, 255f);
-			break;
-			case ELinkerState.Linked:
-				_Sprite.color = new Color(255f, 0f, 128f, 255f);
-			break;
-			case ELinkerState.Falling:
-				float distCovered = (Time.time - _FallStartTime) * _FallSpeed;
-				float fractionOfJourney = distCovered / _FallJourney;
-				transform.position = Vector3.Lerp(_FallFromPosition, _FallDestination, fractionOfJourney);
-				if (fractionOfJourney >= 1f) {
-					transform.position = _FallDestination;
-					_LinkerState = ELinkerState.Inactive;
-				}
-			break;
+		} else if (_LinkerState == ELinkerState.Falling) {
+			float distCovered = (Time.time - _FallStartTime) * _FallSpeed;
+			float fractionOfJourney = distCovered / _FallJourney;
+			transform.position = Vector3.Lerp(_FallFromPosition, _FallDestination, fractionOfJourney);
+			if (fractionOfJourney >= 1f) {
+				transform.position = _FallDestination;
+				SetState(ELinkerState.Idle);
+			}
 		}
 	}
 
@@ -88,22 +76,37 @@ public class LinkerObject : MonoBehaviour {
 		_FallDestination = fallDestination;
 		_FallJourney = Vector3.Distance(_FallFromPosition, _FallDestination);
 		_GridCoords = destGridCoords;
-		_LinkerState = ELinkerState.Falling;
+		SetState(ELinkerState.Falling);
 	}
 
 	public void SetFocused() {
-		_LinkerState = ELinkerState.Focused;
+		SetState(ELinkerState.Focused);
 	}
 
 	public void SetLinked() {
-		_LinkerState = ELinkerState.Linked;
+		SetState(ELinkerState.Linked);
 	}
 
 	public void CancelLink() {
-		_LinkerState = ELinkerState.Inactive;
+		SetState(ELinkerState.Idle);
 	}
 
 	public void ConfirmLink() {
-		_LinkerState = ELinkerState.Destroy;
+		SetState(ELinkerState.Destroy);
+	}
+
+	private void SetState(ELinkerState state) {
+		_LinkerState = state;
+		switch (state) {
+			case ELinkerState.Focused:
+			_Animaton.Play("LinkerFocused");
+			break;
+			case ELinkerState.Linked:
+			_Animaton.Play("LinkerLinked");
+			break;
+			default:
+			_Animaton.Play("LinkerIdle");
+			break;
+		}
 	}
 }
