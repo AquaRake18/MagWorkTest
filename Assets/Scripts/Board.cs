@@ -65,8 +65,8 @@ public class Board : MonoBehaviour {
                 GameObject goTile = Instantiate(
                     _BoardTilePrefab,
                     new Vector3(
-                        gameObject.transform.position.x + x * Layouts._BoardTileSize.x,
-                        gameObject.transform.position.y + drawRow * Layouts._BoardTileSize.y,
+                        gameObject.transform.position.x + x * (Layouts._BoardTileSize.x + Layouts._BoardPadding.x),
+                        gameObject.transform.position.y + drawRow * (Layouts._BoardTileSize.y + Layouts._BoardPadding.y),
                         0
                     ),
                     Quaternion.identity
@@ -86,8 +86,8 @@ public class Board : MonoBehaviour {
             GameObject go = Instantiate(
                 _LinkerSpawnerPrefab,
                 new Vector3(
-                    gameObject.transform.position.x + spawnerColumn * Layouts._BoardTileSize.x,
-                    gameObject.transform.position.y + _Settings.BoardHeight * Layouts._BoardTileSize.y,
+                    gameObject.transform.position.x + spawnerColumn * (Layouts._BoardTileSize.x + Layouts._BoardPadding.x),
+                    gameObject.transform.position.y + _Settings.BoardHeight * (Layouts._BoardTileSize.y + Layouts._BoardPadding.y),
                     0
                 ),
                 Quaternion.identity

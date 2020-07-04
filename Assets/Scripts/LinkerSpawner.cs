@@ -27,7 +27,7 @@ public class LinkerSpawner : MonoBehaviour {
                 _LinkerTypes[Random.Range(0, _LinkerTypes.Length)],
                 new Vector3(
                     spawnerPos.x,
-                    spawnerPos.y + Layouts._BoardTileSize.y * spawnRow,
+                    spawnerPos.y + (Layouts._BoardTileSize.y + Layouts._BoardPadding.y) * spawnRow,
                     0
                 ),
                 Quaternion.identity

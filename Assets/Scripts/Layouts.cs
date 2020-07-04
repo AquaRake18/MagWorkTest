@@ -2,6 +2,7 @@
 
 public static class Layouts {
     public static Vector2 _BoardTileSize = new Vector2(.5f, .5f);
+    public static Vector2 _BoardPadding = new Vector2(0f, 0f);
 
     public static Vector3 GetBoardPos(LevelSettings settings) {
         return new Vector3(
