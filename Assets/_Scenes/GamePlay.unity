@@ -1052,8 +1052,8 @@ MonoBehaviour:
   _LinkerSpawnerPrefab: {fileID: 8258689522191014029, guid: 95bd3d5dfd1d54f7cb9ced737be09de7,
     type: 3}
   _LinkerTypes:
-  - {fileID: 1086177302793967712, guid: 8ec5b78a8c1f242e880c29815d7b6394, type: 3}
   - {fileID: 1086177302793967712, guid: b72d4c026f4a24cac8173a038cb2d386, type: 3}
   - {fileID: 1086177302793967712, guid: 3e89a8bf4862e4fc5af7b2a551aa7610, type: 3}
-  - {fileID: 1086177302793967712, guid: 25986bbfc06504437851407c3210b56a, type: 3}
   - {fileID: 1086177302793967712, guid: ba6c1d14cf0e747fdb34938c06e8399d, type: 3}
+  - {fileID: 1086177302793967712, guid: 25986bbfc06504437851407c3210b56a, type: 3}
+  - {fileID: 1086177302793967712, guid: 8ec5b78a8c1f242e880c29815d7b6394, type: 3}
