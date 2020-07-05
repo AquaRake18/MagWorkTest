@@ -1120,6 +1120,7 @@ GameObject:
   - component: {fileID: 672861543}
   - component: {fileID: 672861545}
   - component: {fileID: 672861544}
+  - component: {fileID: 672861546}
   m_Layer: 5
   m_Name: PanelFailure
   m_TagString: Untagged
@@ -1187,6 +1188,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672861542}
   m_CullTransparentMesh: 0
+--- !u!111 &672861546
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672861542}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &713985579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2274,6 +2291,7 @@ GameObject:
   - component: {fileID: 1255367341}
   - component: {fileID: 1255367343}
   - component: {fileID: 1255367342}
+  - component: {fileID: 1255367344}
   m_Layer: 5
   m_Name: PanelEndOfContent
   m_TagString: Untagged
@@ -2342,6 +2360,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255367340}
   m_CullTransparentMesh: 0
+--- !u!111 &1255367344
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255367340}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1486912257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,6 +3358,7 @@ GameObject:
   - component: {fileID: 1865059648}
   - component: {fileID: 1865059650}
   - component: {fileID: 1865059649}
+  - component: {fileID: 1865059651}
   m_Layer: 5
   m_Name: PanelSuccess
   m_TagString: Untagged
@@ -3390,6 +3425,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865059647}
   m_CullTransparentMesh: 0
+--- !u!111 &1865059651
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865059647}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1b37e23174d2a487ba6464ec2018dde6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1884155249
 GameObject:
   m_ObjectHideFlags: 0
