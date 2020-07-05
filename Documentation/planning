@@ -1,7 +1,6 @@
 *************************
   Planning
 ***********************
-Use: Animation curves, parameters
 
 
 __Monday__
@@ -25,7 +24,7 @@ Game play:
 * Cancel current link
 * Match and remove
 * Linking (Adjacent restriction)
-* Collapse collumn
+* Collapse collumns
 * Restrict user actions while columns are collapsing
 
 
@@ -45,7 +44,7 @@ __Friday__
 * Level editor
 * Actual levels
 * Level selection menu
-* End condition: Moves and score
+* End condition: Score (and moves?)
 
 
 __Saturday__
@@ -55,23 +54,38 @@ Art and juice
 * Board tile BG
 * Simple animations for Linker states
 * (Add Googly Eyes that track player)
-* (Add eye brows with emotions)
 * Fitting font
 Misc
 * Unforeseen size issue
 
 
 __Sunday__
-* Exclamations
+* Organize: Must have & Nice to have
+Must have
+* Reshuffle board (if no possible matches)
 * Accelerating fall speed
-* Pooling
-* Reshuffle (if no possible matches)
-* Refactor scene loading away from Board
-* 2nd look at circular dependency refactoring
-* Solve bug with scrolling score text positioning
-* Look into lose level on out of moves
-* Reposition sprite mask
+* Add Moves
+* Add post level UI (win/lose/end of content)
+* UI buttons animating (Start menu)
+* Linker death animation
+* Focused animation keep animating
+* Linked visual effects
+* Sounds
+* Play test levels
+Nice to have
+* Start screen bubbles animating
+* Start screen props (sea weed, rocks)
+* Exclamations
 * Stars and star scores
-* Final touches
+* Pooling
+* Refactor scene loading away from Board
+* Solve bug with scrolling score text positioning
+* 2nd look at circular dependency refactoring
+* Reposition sprite mask
+* Ocean background (Game play)
+* (Add normal eyes for Crab and Turbot)
+* Add Googly eyes Easter egg
+* (Add eye brows with emotions)
+
 * Delivery
 
