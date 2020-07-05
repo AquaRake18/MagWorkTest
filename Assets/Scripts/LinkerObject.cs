@@ -14,6 +14,7 @@ public class LinkerObject : MonoBehaviour {
 	private ELinkerState _LinkerState;
 	private LinkerLogic _LinkerLogic = null;
 	public SGridCoords _GridCoords;
+	private float _TimeToDie = 1.35f;
 	private float _FallSpeed;
 	private float _FallStartTime;
 	private float _FallJourney;
@@ -49,7 +50,7 @@ public class LinkerObject : MonoBehaviour {
 
 	void Update() {
 		if (_LinkerState == ELinkerState.Destroy) {
-			Destroy(gameObject);
+			Destroy(gameObject, _TimeToDie);
 		} else if (_LinkerState == ELinkerState.Falling) {
 			float distCovered = (Time.time - _FallStartTime) * _FallSpeed;
 			float fractionOfJourney = distCovered / _FallJourney;
@@ -99,14 +100,18 @@ public class LinkerObject : MonoBehaviour {
 		_LinkerState = state;
 		switch (state) {
 			case ELinkerState.Focused:
-			_Animaton.Play("LinkerFocused");
-			break;
+				_Animaton.Play("LinkerFocused");
+				break;
 			case ELinkerState.Linked:
-			_Animaton.Play("LinkerLinked");
-			break;
+				_Animaton.Play("LinkerLinked");
+				break;
+			case ELinkerState.Destroy:
+				_Animaton.Play("LinkerDestroyed");
+				break;
 			default:
-			_Animaton.Play("LinkerIdle");
-			break;
+				_Animaton.Play("LinkerIdle");
+				gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "LinkerDestroyed";
+				break;
 		}
 	}
 }

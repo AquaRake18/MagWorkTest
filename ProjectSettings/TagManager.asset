@@ -61,3 +61,6 @@ TagManager:
   - name: Pupil
     uniqueID: 2654233267
     locked: 0
+  - name: LinkerDestroyed
+    uniqueID: 3382645637
+    locked: 0
