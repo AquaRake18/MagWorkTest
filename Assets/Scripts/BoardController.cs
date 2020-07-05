@@ -25,49 +25,41 @@ public static class BoardController {
 		}
 	}
 
-	public static int GetAvailableLinks(SGridCoords boardSize, LinkerObject[,] linkerObjects) {
-		return 1;
-		/*int linkCount = 0;
-		List<LinkerObject> completedLinks = new List<LinkerObject>();
-		List<LinkerObject> links = new List<LinkerObject>();
+	public static bool HasAnyThreeOrMoreChains(SGridCoords boardSize, LinkerObject[,] linkerObjects) {
+		List<LinkerObject> currentLinks = new List<LinkerObject>();
 		for (int row = 0; row < boardSize._Row; ++row) {
 			for (int column = 0; column < boardSize._Column; ++column) {
-				links = GetLinksFrom(linkerObjects[column, row], boardSize, linkerObjects, completedLinks);
-				if (links.Count >= 3) {
-					++linkCount;
-					foreach (LinkerObject obj in links) {
-						completedLinks.Add(obj);
-					}
+				currentLinks.Add(linkerObjects[column, row]);
+				while (TryAddLink(ref currentLinks, boardSize, linkerObjects)) {}
+				if (currentLinks.Count >= 3) {
+					return true;
 				}
-				links.Clear();
+				currentLinks.Clear();
 			}
 		}
-		return linkCount;*/
+		return false;
 	}
 
-	private static List<LinkerObject> GetLinksFrom(
-		LinkerObject focusedLinker,
+	private static bool TryAddLink(
+		ref List<LinkerObject> currentLinks,
 		SGridCoords boardSize,
-		LinkerObject[,] allLinkerObjects,
-		List<LinkerObject> completedLinks) {
-		List<LinkerObject> links = new List<LinkerObject>();
+		LinkerObject[,] allLinkerObjects) {
+		LinkerObject focusedLinker = currentLinks[currentLinks.Count - 1];
 		int direction = 0;
 		int directionCount = Enum.GetNames(typeof(EDirection)).Length;
-		bool match = false;
-		while (!match
-			&& direction < directionCount) {
+		while (direction < directionCount) {
 			SGridCoords otherCoords = focusedLinker._GridCoords.GetRelativeCoords((EDirection)direction);
 			if (!OutOfBounds(boardSize, otherCoords)) {
 				LinkerObject other = allLinkerObjects[otherCoords._Column, otherCoords._Row];
-				if (!links.Contains(other)
+				if (!currentLinks.Contains(other)
 					&& focusedLinker.gameObject.CompareTag(other.gameObject.tag)) {
-					links.Add(other);
-					match = true;
+					currentLinks.Add(other);
+					return true;
 				}
 			}
 			++direction;
 		}
-		return links;
+		return false;
 	}
 
 	private static bool OutOfBounds(

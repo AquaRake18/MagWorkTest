@@ -59,6 +59,17 @@ public class FallLogic {
             }
         }
         _CollapsingCollumns = false;
+
+        int shuffleCount = 0;
+        while (shuffleCount < _MaxShuffles
+            && !BoardController.HasAnyThreeOrMoreChains(_BoardSize, _LinkerObjects)) {
+            ++shuffleCount;
+            if (shuffleCount < _MaxShuffles) {
+                BoardController.ShuffleBoard(_BoardSize, ref _BoardTiles, ref _LinkerObjects);
+            } else {
+                Debug.LogError("Didn't manage to shuffle. Level is unplayable.");
+            }
+        }
     }
 
     public bool IsCollapsingCollumns() {
@@ -127,14 +138,6 @@ public class FallLogic {
                         destCoords
                     );
                 }
-            }
-        }
-        int shuffleCount = 0;
-        while (BoardController.GetAvailableLinks(_BoardSize, _LinkerObjects) == 0) {
-            BoardController.ShuffleBoard(_BoardSize, ref _BoardTiles, ref _LinkerObjects);
-            ++shuffleCount;
-            if (shuffleCount >= _MaxShuffles) {
-                Debug.LogError("Didn't manage to shuffle. Level is unplayable.");
             }
         }
     }
