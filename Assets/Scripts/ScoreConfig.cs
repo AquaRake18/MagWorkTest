@@ -13,8 +13,13 @@ public class ScoreConfig : MonoBehaviour {
     public RectTransform _ScrollingTextParent;
     public GameObject _ScrollingTextPrefab;
 
+    private Animation _MovesBounceAnimation;
     private int _TargetScore = 9999;
     private LevelProgress _LevelProgress;
+
+    void Awake() {
+        _MovesBounceAnimation = _MovesText.gameObject.GetComponent<Animation>();
+    }
 
     public void Initialize(LevelSettings settings, LevelProgress levelProgress) {
         _TargetScore = settings.TargetScore;
@@ -27,6 +32,7 @@ public class ScoreConfig : MonoBehaviour {
     public void AddMovesLeft(int moves) {
         _LevelProgress.MovesLeft += moves;
         _MovesText.text = "" + _LevelProgress.MovesLeft;
+        _MovesBounceAnimation.Play("NumberBounce");
     }
 
     public void AddScore(List<Vector3> positions) {
