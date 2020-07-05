@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Board : MonoBehaviour {
     public int _FPS = 60;
     public ScoreConfig _ScoreConfig;
+    public PostGameMenu _PostGameMenu;
     public float _FallSpeed = 2.4f;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
@@ -16,12 +16,15 @@ public class Board : MonoBehaviour {
     private LevelProgress _LevelProgress;
     private EndGameCondition _EndGameCondition;
 
+    private bool _IsPostGame;
+
     void Awake() {
         Application.targetFrameRate = _FPS;
         _Settings = new LevelSettings();
         _LevelProgress = new LevelProgress(_Settings.Moves);
         _ScoreConfig.Initialize(_Settings, _LevelProgress);
         _EndGameCondition = new EndGameCondition(EGameMode.Score, _Settings, _LevelProgress);
+        _IsPostGame = false;
     }
 
     void Start() {
@@ -42,20 +45,15 @@ public class Board : MonoBehaviour {
     }
 
     void Update() {
+        if (_IsPostGame) {
+            return;
+        }
         EndGameCondition.EGameResult gameResult = _EndGameCondition.GetGameResult();
-        switch (gameResult) {
-            case EndGameCondition.EGameResult.Running:
-                _LinkerLogic.Update();
-                break;
-            case EndGameCondition.EGameResult.Success:
-                UserData data = SaveSystem.LoadUserData();
-                ++data._CurrentLevel;
-                SaveSystem.SaveUserData(data);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                break;
-            case EndGameCondition.EGameResult.Failure:
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                break;
+        if (gameResult == EndGameCondition.EGameResult.Running) {
+            _LinkerLogic.Update();
+        } else {
+            _PostGameMenu.OpenPostGameMenu(gameResult);
+            _IsPostGame = true;
         }
     }
 

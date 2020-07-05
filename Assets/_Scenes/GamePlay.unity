@@ -313,7 +313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 169.4}
+  m_AnchoredPosition: {x: 0, y: 164.3}
   m_SizeDelta: {x: 624.1, y: 82.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &109188808
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 44
-  m_fontSizeBase: 44
+  m_fontSize: 44.7
+  m_fontSizeBase: 44.7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1849,7 +1849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &923207386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3901,7 +3901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PostGameMenuUI: {fileID: 923207385}
   _PostGameFailure: {fileID: 672861542}
-  _PostGameSuccess: {fileID: 672861542}
+  _PostGameSuccess: {fileID: 1865059647}
+  _PostGameEndOfContent: {fileID: 1255367340}
 --- !u!114 &2023996390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3969,6 +3970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _FPS: 60
   _ScoreConfig: {fileID: 2023996390}
+  _PostGameMenu: {fileID: 2023996388}
   _FallSpeed: 2.3
   _BoardTilePrefab: {fileID: 6953911376855918421, guid: cc337d914a5eb46ada22cf52b5c38c9c,
     type: 3}
