@@ -1,8 +1,9 @@
 ﻿public class EndGameCondition {
     public enum EGameResult {
         Running,
+        Failure,
         Success,
-        Failure
+        EndOfContent
     }
 
     private EGameMode _GameMode;
@@ -19,15 +20,20 @@
     }
 
     public EGameResult GetGameResult() {
+        bool success = false;
         switch (_GameMode) {
             case EGameMode.Score:
                 if (_LevelProgress.MovesLeft <= 0
                     && _LevelProgress.CurrentScore < _LevelSettings.TargetScore) {
                     return EGameResult.Failure;
                 } else if (_LevelProgress.CurrentScore >= _LevelSettings.TargetScore) {
-                    return EGameResult.Success;
+                    success = true;
                 }
                 break;
+        }
+        if (success) {
+            //EndOfContent check
+            return EGameResult.Success;
         }
         return EGameResult.Running;
     }
