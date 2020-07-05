@@ -45,4 +45,25 @@
         }
         return false;
     }
+
+    public SGridCoords GetRelativeCoords(EDirection direction) {
+        switch (direction) {
+            case EDirection.NorthWest:
+                return new SGridCoords(_Column - 1, _Row - 1);
+            case EDirection.North:
+                return new SGridCoords(_Column, _Row - 1);
+            case EDirection.NorthEast:
+                return new SGridCoords(_Column + 1, _Row - 1);
+            case EDirection.East:
+                return new SGridCoords(_Column + 1, _Row);
+            case EDirection.SouthEast:
+                return new SGridCoords(_Column + 1, _Row + 1);
+            case EDirection.South:
+                return new SGridCoords(_Column, _Row + 1);
+            case EDirection.SouthWest:
+                return new SGridCoords(_Column - 1, _Row + 1);
+            default:
+                return new SGridCoords(_Column - 1, _Row);
+        }
+    }
 }

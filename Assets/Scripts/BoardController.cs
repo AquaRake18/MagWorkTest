@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class BoardController {
@@ -9,7 +10,7 @@ public static class BoardController {
 		int n = linkerObjects.Length;
 		while (n > 1) {
 			--n;
-			int k = Random.Range(0, n + 1);
+			int k = UnityEngine.Random.Range(0, n + 1);
 			SGridCoords posK = ArrayIndexToCoords(boardSize, k);
 			SGridCoords posN = ArrayIndexToCoords(boardSize, n);
 			LinkerObject value = linkerObjects[posK._Column, posK._Row];
@@ -25,26 +26,66 @@ public static class BoardController {
 	}
 
 	public static int GetAvailableLinks(SGridCoords boardSize, LinkerObject[,] linkerObjects) {
-		List<LinkerObject> list = new List<LinkerObject>();
+		return 1;
+		/*int linkCount = 0;
+		List<LinkerObject> completedLinks = new List<LinkerObject>();
+		List<LinkerObject> links = new List<LinkerObject>();
 		for (int row = 0; row < boardSize._Row; ++row) {
 			for (int column = 0; column < boardSize._Column; ++column) {
+				links = GetLinksFrom(linkerObjects[column, row], boardSize, linkerObjects, completedLinks);
+				if (links.Count >= 3) {
+					++linkCount;
+					foreach (LinkerObject obj in links) {
+						completedLinks.Add(obj);
+					}
+				}
+				links.Clear();
 			}
 		}
-		return 1;
+		return linkCount;*/
 	}
 
-	public static SGridCoords[] GetHint(LinkerObject[,] linkerObjects) {
-		return new SGridCoords[0];
-	}
-
-	public static SGridCoords[] GetBestHint(LinkerObject[,] linkerObjects) {
-		return new SGridCoords[0];
-	}
-
-	private static bool HasLinks(
+	private static List<LinkerObject> GetLinksFrom(
+		LinkerObject focusedLinker,
 		SGridCoords boardSize,
-		SGridCoords gridPosition,
-		LinkerObject[,] linkerObjects) {
+		LinkerObject[,] allLinkerObjects,
+		List<LinkerObject> completedLinks) {
+		List<LinkerObject> links = new List<LinkerObject>();
+		int direction = 0;
+		int directionCount = Enum.GetNames(typeof(EDirection)).Length;
+		bool match = false;
+		while (!match
+			&& direction < directionCount) {
+			SGridCoords otherCoords = focusedLinker._GridCoords.GetRelativeCoords((EDirection)direction);
+			if (!OutOfBounds(boardSize, otherCoords)) {
+				LinkerObject other = allLinkerObjects[otherCoords._Column, otherCoords._Row];
+				if (!links.Contains(other)
+					&& focusedLinker.gameObject.CompareTag(other.gameObject.tag)) {
+					links.Add(other);
+					match = true;
+				}
+			}
+			++direction;
+		}
+		return links;
+	}
+
+	private static bool OutOfBounds(
+		SGridCoords boardSize,
+		SGridCoords gridCoords) {
+		if (gridCoords._Row < 0) {
+			// North
+			return true;
+		} else if (gridCoords._Row >= boardSize._Row) {
+			// South
+			return true;
+		} else if (gridCoords._Column < 0) {
+			// West
+			return true;
+		} else if (gridCoords._Column >= boardSize._Column) {
+			// East
+			return true;
+		}
 		return false;
 	}
 
