@@ -18,6 +18,7 @@ public class LinkerLogic {
 
     public LinkerLogic(
         ScoreConfig scoreConfig,
+        EndGameCondition endGameCondition,
         Vector3 boardPosition,
         SGridCoords boardSize,
         BoardTile[,] boardTiles,
@@ -27,7 +28,8 @@ public class LinkerLogic {
             boardPosition,
             boardSize,
             boardTiles,
-            fallSpeed
+            fallSpeed,
+            endGameCondition
         );
     }
 

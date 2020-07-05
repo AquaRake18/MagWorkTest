@@ -8,6 +8,7 @@ public class FallLogic {
     private Dictionary<int, LinkerSpawner> _LinkerSpawners;
     private LinkerObject[,] _LinkerObjects;
     private float _FallSpeed;
+    private EndGameCondition _EndGameCondition;
     private bool _CollapsingCollumns = false;
 
     private readonly int _MaxShuffles = 2000;
@@ -26,11 +27,13 @@ public class FallLogic {
         Vector3 boardPosition,
         SGridCoords boardSize,
         BoardTile[,] boardTiles,
-        float fallSpeed) {
+        float fallSpeed,
+        EndGameCondition endGameCondition) {
         _BoardPosition = boardPosition;
         _BoardSize = boardSize;
         _BoardTiles = boardTiles;
         _FallSpeed = fallSpeed;
+        _EndGameCondition = endGameCondition;
         _LinkerObjects = new LinkerObject[_BoardSize._Column, _BoardSize._Row];
     }
 
@@ -67,7 +70,7 @@ public class FallLogic {
             if (shuffleCount < _MaxShuffles) {
                 BoardController.ShuffleBoard(_BoardSize, ref _BoardTiles, ref _LinkerObjects);
             } else {
-                Debug.LogError("Didn't manage to shuffle. Level is unplayable.");
+                _EndGameCondition.SetShuffleFailure();
             }
         }
     }

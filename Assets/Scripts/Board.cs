@@ -34,6 +34,7 @@ public class Board : MonoBehaviour {
 
         _LinkerLogic = new LinkerLogic(
             _ScoreConfig,
+            _EndGameCondition,
             gameObject.transform.position,
             new SGridCoords(_Settings.BoardWidth, _Settings.BoardHeight),
             boardTiles,

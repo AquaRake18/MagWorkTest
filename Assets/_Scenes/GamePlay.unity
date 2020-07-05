@@ -3991,6 +3991,7 @@ MonoBehaviour:
   _PostGameFailure: {fileID: 672861542}
   _PostGameSuccess: {fileID: 1865059647}
   _PostGameEndOfContent: {fileID: 1255367340}
+  _FailureText: {fileID: 828200860}
 --- !u!114 &2023996390
 MonoBehaviour:
   m_ObjectHideFlags: 0
