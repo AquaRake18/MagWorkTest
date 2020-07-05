@@ -19,7 +19,7 @@ public class Board : MonoBehaviour {
     void Awake() {
         Application.targetFrameRate = _FPS;
         _Settings = new LevelSettings();
-        _LevelProgress = new LevelProgress();
+        _LevelProgress = new LevelProgress(_Settings.Moves);
         _ScoreConfig.Initialize(_Settings, _LevelProgress);
         _EndGameCondition = new EndGameCondition(EGameMode.Score, _Settings, _LevelProgress);
     }
@@ -42,13 +42,20 @@ public class Board : MonoBehaviour {
     }
 
     void Update() {
-        if (!_EndGameCondition.ConditionsMet()) {
-            _LinkerLogic.Update();
-        } else {
-            UserData data = SaveSystem.LoadUserData();
-            ++data._CurrentLevel;
-            SaveSystem.SaveUserData(data);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        EndGameCondition.EGameResult gameResult = _EndGameCondition.GetGameResult();
+        switch (gameResult) {
+            case EndGameCondition.EGameResult.Running:
+                _LinkerLogic.Update();
+                break;
+            case EndGameCondition.EGameResult.Success:
+                UserData data = SaveSystem.LoadUserData();
+                ++data._CurrentLevel;
+                SaveSystem.SaveUserData(data);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                break;
+            case EndGameCondition.EGameResult.Failure:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                break;
         }
     }
 

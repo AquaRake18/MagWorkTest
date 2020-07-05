@@ -86,6 +86,7 @@ public class LinkerLogic {
                 positions.Add(obj.transform.position);
                 obj.ConfirmLink();
             }
+            _ScoreConfig.AddMovesLeft(-1);
             _ScoreConfig.AddScore(positions);
             _FallLogic.CollapseCollumns();
         }

@@ -1263,6 +1263,7 @@ MonoBehaviour:
   _BasicScore: 200
   _BonusScorePerTier: 50
   _LinksPerTier: 3
+  _MovesText: {fileID: 1486912259}
   _CurrentScoreText: {fileID: 617969637}
   _TargetScoreText: {fileID: 235240199}
   _ScrollingTextParent: {fileID: 1611420657}
