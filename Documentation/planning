@@ -63,11 +63,13 @@ __Sunday__
 * Organize: Must have & Nice to have
 Must have
 * Reshuffle board (if no possible matches)
-* Accelerating fall speed
 * Add Moves
 * Add post level UI (win/lose/end of content)
-* UI buttons animating (Start menu)
+* Add popup drop down animation
+* UI buttons animating
+* Refactor scene loading away from Board
 * Linker death animation
+* Failed to shuffle UI flow
 * Focused animation keep animating
 * Linked visual effects
 * Sounds
@@ -78,11 +80,10 @@ Nice to have
 * Exclamations
 * Stars and star scores
 * Pooling
-* Refactor scene loading away from Board
 * Solve bug with scrolling score text positioning
-* 2nd look at circular dependency refactoring
 * Reposition sprite mask
 * Ocean background (Game play)
+* Accelerating fall speed
 * (Add normal eyes for Crab and Turbot)
 * Add Googly eyes Easter egg
 * (Add eye brows with emotions)
