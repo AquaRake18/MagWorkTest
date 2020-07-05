@@ -10,6 +10,8 @@ public class FallLogic {
     private float _FallSpeed;
     private bool _CollapsingCollumns = false;
 
+    private readonly int _MaxShuffles = 2000;
+
     private readonly struct SRefillData {
         public int _Column { get; }
         public int _EmptySpaces { get; }
@@ -125,6 +127,14 @@ public class FallLogic {
                         destCoords
                     );
                 }
+            }
+        }
+        int shuffleCount = 0;
+        while (BoardController.GetAvailableLinks(_BoardSize, _LinkerObjects) == 0) {
+            BoardController.ShuffleBoard(_BoardSize, ref _BoardTiles, ref _LinkerObjects);
+            ++shuffleCount;
+            if (shuffleCount >= _MaxShuffles) {
+                Debug.LogError("Didn't manage to shuffle. Level is unplayable.");
             }
         }
     }
