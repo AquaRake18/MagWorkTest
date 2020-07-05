@@ -87,22 +87,22 @@ public class FallLogic {
             }
             emptyRows = 0;
         }
-        RefreshArrays();
+        RefreshLinkersTileParents();
         RefillCollumns(refillDataList);
     }
 
-    private void RefreshArrays() {
+    private void RefreshLinkersTileParents() {
         for (int x = 0; x < _BoardSize._Column; ++x) {
             for (int y = _BoardSize._Row - 1; y >= 0; --y) {
                 LinkerObject obj = _LinkerObjects[x, y];
-                int destX = obj._GridCoords._Column;
-                int destY = obj._GridCoords._Row;
-                if (obj
-                    && !(destX == x
-                    && destY == y)) {
-                    _LinkerObjects[destX, destY] = obj;
-                    _LinkerObjects[x, y] = null;
-                    obj.gameObject.transform.parent = _BoardTiles[destX, destY].gameObject.transform;
+                if (obj) {
+                    int destX = obj._GridCoords._Column;
+                    int destY = obj._GridCoords._Row;
+                    if (!(destX == x && destY == y)) {
+                        _LinkerObjects[destX, destY] = obj;
+                        _LinkerObjects[x, y] = null;
+                        obj.gameObject.transform.parent = _BoardTiles[destX, destY].gameObject.transform;
+                    }
                 }
             }
         }
