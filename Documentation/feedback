@@ -1,0 +1,9 @@
+* The stateful nature of the game was considered, but handled via several enum checks, often in MonoBehaviour Update loops. We'd prefer to see this handled in a cleaner way rather than through frequent polling.
+
+* We would have liked to have seen more thought going into garbage management (such as Object Pooling) as this is such a key aspect of mobile game development.
+
+* While it was nice to see dependencies injected into scripts via constructors or Init methods, beyond this, we didn't get a good sense of his style. The rest of the project was lacking in terms of formal software design.
+
+* The game gets cropped and does not display correctly when running at higher resolutions (e.g. iPhone XS) or thinner aspect ratios.
+
+* A line indicating the current link would've been very useful to help visualise the tiles being selected.
