@@ -8,7 +8,6 @@ public class FallLogic {
     private Dictionary<int, LinkerSpawner> _LinkerSpawners;
     private LinkerObject[,] _LinkerObjects;
     private float _FallSpeed;
-    private EndGameCondition _EndGameCondition;
     private bool _CollapsingCollumns = false;
 
     private readonly int _MaxShuffles = 2000;
@@ -27,13 +26,11 @@ public class FallLogic {
         Vector3 boardPosition,
         SGridCoords boardSize,
         BoardTile[,] boardTiles,
-        float fallSpeed,
-        EndGameCondition endGameCondition) {
+        float fallSpeed) {
         _BoardPosition = boardPosition;
         _BoardSize = boardSize;
         _BoardTiles = boardTiles;
         _FallSpeed = fallSpeed;
-        _EndGameCondition = endGameCondition;
         _LinkerObjects = new LinkerObject[_BoardSize._Column, _BoardSize._Row];
     }
 
@@ -41,7 +38,7 @@ public class FallLogic {
         _LinkerSpawners = linkerSpawners;
     }
 
-    public void Start() {
+    public void Initialize() {
         List<SRefillData> refillDataList = new List<SRefillData>();
         for (int column = 0; column < _BoardSize._Column; ++column) {
             refillDataList.Add(new SRefillData(column, _BoardSize._Row));
@@ -70,7 +67,8 @@ public class FallLogic {
             if (shuffleCount < _MaxShuffles) {
                 BoardController.ShuffleBoard(_BoardSize, ref _BoardTiles, ref _LinkerObjects);
             } else {
-                _EndGameCondition.SetShuffleFailure();
+                PostGameResults._ShuffleFailure = true;
+                Publisher.Instance.NotifyAll(ESubjectTypes.LevelEnd);
             }
         }
     }

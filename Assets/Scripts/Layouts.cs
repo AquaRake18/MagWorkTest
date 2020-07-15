@@ -12,32 +12,32 @@ public static class Layouts {
     public static Vector2 _BoardTileSize = new Vector2(.5f, .5f);
     public static Vector2 _BoardPadding = new Vector2(0f, 0f);
 
-    public static Vector3 GetBoardPos(LevelSettings settings) {
+    public static Vector3 GetBoardPos() {
         return new Vector3(
-            -((_BoardTileSize.x + _BoardPadding.x) * settings.BoardWidth) / 2f,
-            -((_BoardTileSize.y + _BoardPadding.y) * settings.BoardHeight) / 2f,
+            -((_BoardTileSize.x + _BoardPadding.x) * LevelSettings.Instance.BoardWidth) / 2f,
+            -((_BoardTileSize.y + _BoardPadding.y) * LevelSettings.Instance.BoardHeight) / 2f,
             0
         );
     }
 
-    public static void UpdateCameraZoom(LevelSettings settings) {
-        if (settings.BoardWidth <= 3
-            && settings.BoardHeight <= 5) {
+    public static void UpdateCameraZoom() {
+        if (LevelSettings.Instance.BoardWidth <= 3
+            && LevelSettings.Instance.BoardHeight <= 5) {
             Camera.main.orthographicSize = _XSmall;
-        } else if (settings.BoardWidth <= 4
-            && settings.BoardHeight <= 6) {
+        } else if (LevelSettings.Instance.BoardWidth <= 4
+            && LevelSettings.Instance.BoardHeight <= 6) {
             Camera.main.orthographicSize = _Small;
-        } else if (settings.BoardWidth <= 5
-            && settings.BoardHeight <= 7) {
+        } else if (LevelSettings.Instance.BoardWidth <= 5
+            && LevelSettings.Instance.BoardHeight <= 7) {
             Camera.main.orthographicSize = _Medium;
-        } else if (settings.BoardWidth <= 6
-            && settings.BoardHeight <= 8) {
+        } else if (LevelSettings.Instance.BoardWidth <= 6
+            && LevelSettings.Instance.BoardHeight <= 8) {
             Camera.main.orthographicSize = _Large;
-        } else if (settings.BoardWidth <= 7) {
+        } else if (LevelSettings.Instance.BoardWidth <= 7) {
             Camera.main.orthographicSize = _XLarge;
-        } else if (settings.BoardWidth <= 8) {
+        } else if (LevelSettings.Instance.BoardWidth <= 8) {
             Camera.main.orthographicSize = _XXLarge;
-        } else if (settings.BoardWidth <= 9) {
+        } else if (LevelSettings.Instance.BoardWidth <= 9) {
             Camera.main.orthographicSize = _XXXLarge;
         }
     }

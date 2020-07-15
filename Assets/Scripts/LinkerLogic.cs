@@ -12,24 +12,19 @@ public class LinkerLogic {
     }
 
     private readonly int _MinimumLinks = 3;
-    private ScoreConfig _ScoreConfig;
     private FallLogic _FallLogic;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
 
     public LinkerLogic(
-        ScoreConfig scoreConfig,
-        EndGameCondition endGameCondition,
         Vector3 boardPosition,
         SGridCoords boardSize,
         BoardTile[,] boardTiles,
         float fallSpeed) {
-        _ScoreConfig = scoreConfig;
         _FallLogic = new FallLogic(
             boardPosition,
             boardSize,
             boardTiles,
-            fallSpeed,
-            endGameCondition
+            fallSpeed
         );
     }
 
@@ -37,8 +32,8 @@ public class LinkerLogic {
         _FallLogic.SetSpawners(linkerSpawners);
     }
 
-    public void Start() {
-        _FallLogic.Start();
+    public void Initialize() {
+        _FallLogic.Initialize();
     }
 
     public void Update() {
@@ -88,8 +83,8 @@ public class LinkerLogic {
                 positions.Add(obj.transform.position);
                 obj.ConfirmLink();
             }
-            _ScoreConfig.AddMovesLeft(-1);
-            _ScoreConfig.AddScore(positions);
+            ScoreConfig.Instance.AddMovesLeft(-1);
+            ScoreConfig.Instance.AddScore(positions);
             _FallLogic.CollapseCollumns();
         }
         _LinkedObjects.Clear();

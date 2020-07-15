@@ -2,7 +2,9 @@
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PostGameMenu : MonoBehaviour {
+public class PostGameMenu
+    : MonoBehaviour
+    , IObserverLevelEnd {
     public GameObject _PostGameMenuUI;
     public GameObject _PostGameFailure;
     public GameObject _PostGameSuccess;
@@ -14,6 +16,8 @@ public class PostGameMenu : MonoBehaviour {
     private readonly string _FailureShuffle = "Failed to shuffle";
 
     void Awake() {
+        Publisher.Instance.Subscribe(this);
+
         _PostGameMenuUI.SetActive(false);
         _PostGameFailure.SetActive(false);
         _PostGameSuccess.SetActive(false);
@@ -22,22 +26,24 @@ public class PostGameMenu : MonoBehaviour {
         _LevelCount = levelCollection.Count;
     }
 
-    public void OpenPostGameMenu(EndGameCondition.EGameResult gameResult) {
+    public void OnLevelEnd() {
+        PostGameResults.EGameResult gameResult = PostGameResults.GetResult();
+
         _PostGameMenuUI.SetActive(true);
         _PostGameFailure.SetActive(false);
         _PostGameSuccess.SetActive(false);
         _PostGameEndOfContent.SetActive(false);
 
         UserData data = SaveSystem.LoadUserData();
-        bool shuffleFailed = gameResult == EndGameCondition.EGameResult.FailureShuffle;
+        bool shuffleFailed = gameResult == PostGameResults.EGameResult.FailureShuffle;
 
         switch (gameResult) {
-            case EndGameCondition.EGameResult.Failure:
-            case EndGameCondition.EGameResult.FailureShuffle:
+            case PostGameResults.EGameResult.Failure:
+            case PostGameResults.EGameResult.FailureShuffle:
                 _FailureText.text = shuffleFailed ? _FailureShuffle : _FailureMoves;
                 _PostGameFailure.SetActive(true);
                 break;
-            case EndGameCondition.EGameResult.Success:
+            case PostGameResults.EGameResult.Success:
                 if (data._CurrentLevel == _LevelCount) {
                     _PostGameEndOfContent.SetActive(true);
                 } else {
@@ -48,24 +54,30 @@ public class PostGameMenu : MonoBehaviour {
     }
 
     public void OnButtonReplayPressed() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadNextLevelScene();
     }
 
     public void OnButtonReplayEndOfContentPressed() {
         UserData data = SaveSystem.LoadUserData();
         data._CurrentLevel = 1;
         SaveSystem.SaveUserData(data);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadNextLevelScene();
     }
 
     public void OnButtonNextPressed() {
         UserData data = SaveSystem.LoadUserData();
         ++data._CurrentLevel;
         SaveSystem.SaveUserData(data);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadNextLevelScene();
     }
 
     public void OnButtonQuitPressed() {
         Application.Quit();
+    }
+
+    private void LoadNextLevelScene() {
+        Publisher.Instance.NotifyAll(ESubjectTypes.UnloadScene);
+        Publisher.Instance.UnsubscribeAll();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

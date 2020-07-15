@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LinkerOyster
-  - LinkerCrab
-  - LinkerStarfish
-  - LinkerTurbot
-  - LinkerAurelia
+  - LinkerObject
+  - aurelia
+  - crab
+  - oyster
+  - starfish
+  - turbot
   layers:
   - Default
   - TransparentFX

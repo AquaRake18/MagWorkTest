@@ -2,7 +2,10 @@
 using UnityEngine;
 using TMPro;
 
-public class ScoreConfig : MonoBehaviour {
+public class ScoreConfig : Singleton<ScoreConfig> {
+    // Singleton
+    protected ScoreConfig() {}
+
     public int _BasicScore = 200;
     public int _BonusScorePerTier = 50;
     public int _LinksPerTier = 3;
@@ -14,25 +17,24 @@ public class ScoreConfig : MonoBehaviour {
     public GameObject _ScrollingTextPrefab;
 
     private Animation _MovesBounceAnimation;
-    private int _TargetScore = 9999;
-    private LevelProgress _LevelProgress;
 
     void Awake() {
         _MovesBounceAnimation = _MovesText.gameObject.GetComponent<Animation>();
     }
 
-    public void Initialize(LevelSettings settings, LevelProgress levelProgress) {
-        _TargetScore = settings.TargetScore;
-        _LevelProgress = levelProgress;
-        _MovesText.text = "" + _LevelProgress.MovesLeft;
-        _CurrentScoreText.text = "" + _LevelProgress.CurrentScore;
-        _TargetScoreText.text = "" + _TargetScore;
+    public void Initialize() {
+        _MovesText.text = "" + LevelProgress._MovesLeft;
+        _CurrentScoreText.text = "" + LevelProgress._CurrentScore;
+        _TargetScoreText.text = "" + LevelSettings.Instance.TargetScore;
     }
 
     public void AddMovesLeft(int moves) {
-        _LevelProgress.MovesLeft += moves;
-        _MovesText.text = "" + _LevelProgress.MovesLeft;
+        LevelProgress._MovesLeft += moves;
+        _MovesText.text = "" + LevelProgress._MovesLeft;
         _MovesBounceAnimation.Play("NumberBounce");
+        if (LevelProgress._MovesLeft <= 0) {
+            Publisher.Instance.NotifyAll(ESubjectTypes.LevelEnd);
+        }
     }
 
     public void AddScore(List<Vector3> positions) {
@@ -49,8 +51,11 @@ public class ScoreConfig : MonoBehaviour {
                 linkInTier = 0;
             }
         }
-        _LevelProgress.CurrentScore += newScore;
-        _CurrentScoreText.text = "" + _LevelProgress.CurrentScore;
+        LevelProgress._CurrentScore += newScore;
+        _CurrentScoreText.text = "" + LevelProgress._CurrentScore;
+        if (LevelProgress._CurrentScore >= LevelSettings.Instance.TargetScore) {
+            Publisher.Instance.NotifyAll(ESubjectTypes.LevelEnd);
+        }
     }
 
     public void AddScrollingText(int score, Vector3 position) {

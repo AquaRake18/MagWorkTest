@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 
-public class LinkerObject : MonoBehaviour {
-	public enum ELinkerState : int {
-		Idle = 0,
-		Focused,
-		Linked,
-		Destroy,
-		Falling
-	}
+public class LinkerObject
+	: MonoBehaviour
+	, IPooledObject {
+	public Sprite[] _ColorSprites;
+	public SGridCoords _GridCoords;
 
 	private Animation _Animaton;
+	private SpriteRenderer _SpriteRenderer;
 
 	private ELinkerState _LinkerState;
-	private LinkerLogic _LinkerLogic = null;
-	public SGridCoords _GridCoords;
-	private float _TimeToDie = 1.35f;
+	private LinkerLogic _LinkerLogic;
+	private float _TimeToDie = .35f;
+	private float _DestroyTime;
 	private float _FallSpeed;
 	private float _FallStartTime;
 	private float _FallJourney;
@@ -25,10 +23,17 @@ public class LinkerObject : MonoBehaviour {
 		_LinkerLogic = linkerLogic;
 	}
 
+	// IPooledObject
+	public void OnSpawn() {
+		SetState(ELinkerState.Idle);
+		_SpriteRenderer.sprite = _ColorSprites[Random.Range(0, Mathf.Clamp(LevelSettings.Instance.LinkerColors, 0, _ColorSprites.Length))];
+		gameObject.tag = _SpriteRenderer.sprite.name;
+	}
+
 	void Awake() {
 		_Animaton = gameObject.GetComponent<Animation>();
 		_Animaton["LinkerIdle"].speed = 0.15f;
-		SetState(ELinkerState.Idle);
+		_SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 	}
 
     void OnMouseDown() {
@@ -49,8 +54,10 @@ public class LinkerObject : MonoBehaviour {
 	}
 
 	void Update() {
-		if (_LinkerState == ELinkerState.Destroy) {
-			Destroy(gameObject, _TimeToDie);
+		if (_LinkerState == ELinkerState.Destroy
+			&& Time.time >= _DestroyTime) {
+			gameObject.SetActive(false);
+			gameObject.transform.SetParent(ObjectPooler.Instance.gameObject.transform);
 		} else if (_LinkerState == ELinkerState.Falling) {
 			float distCovered = (Time.time - _FallStartTime) * _FallSpeed;
 			float fractionOfJourney = distCovered / _FallJourney;
@@ -107,6 +114,7 @@ public class LinkerObject : MonoBehaviour {
 				break;
 			case ELinkerState.Destroy:
 				_Animaton.Play("LinkerDestroyed");
+				_DestroyTime = Time.time + _TimeToDie;
 				break;
 			default:
 				_Animaton.Play("LinkerIdle");

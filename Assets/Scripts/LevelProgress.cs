@@ -1,18 +1,9 @@
-﻿public class LevelProgress {
-    private int _MovesLeft;
-    public int MovesLeft {
-        get { return _MovesLeft; }
-        set { _MovesLeft = value; }
-    }
+﻿public static class LevelProgress {
+    public static int _MovesLeft;
+    public static int _CurrentScore;
 
-    private int _CurrentScore;
-    public int CurrentScore {
-        get { return _CurrentScore; }
-        set { _CurrentScore = value; }
-    }
-
-    public LevelProgress(int movesLeft) {
-        _MovesLeft = movesLeft;
+    public static void Reset() {
+        _MovesLeft = LevelSettings.Instance.Moves;
         _CurrentScore = 0;
     }
 }

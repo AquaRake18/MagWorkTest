@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8813858607646326949}
   - component: {fileID: 3011114768386760428}
-  - component: {fileID: 2067522501453917278}
+  - component: {fileID: 4869898638020178227}
   - component: {fileID: 5867640083429407601}
-  - component: {fileID: 8846820877590244650}
+  - component: {fileID: 7495307438797969178}
   m_Layer: 0
-  m_Name: LinkerTurbot
-  m_TagString: LinkerTurbot
+  m_Name: LinkerObject
+  m_TagString: LinkerObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,18 +73,18 @@ SpriteRenderer:
   m_SortingLayerID: 1136328135
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4520fa018556f41849949a8521322750, type: 3}
-  m_Color: {r: 0.7924528, g: 0.79245275, b: 0.2728729, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a9ef995246b0b48c08e3324e0c467634, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
---- !u!58 &2067522501453917278
+--- !u!58 &4869898638020178227
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460c5f4722b294f5b97109f503f34efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!111 &8846820877590244650
+  _ColorSprites:
+  - {fileID: 21300000, guid: b6decbb6921c146038c4a04df3d266a7, type: 3}
+  - {fileID: 21300000, guid: a65d0b6bcd5b3415196c395b5197f154, type: 3}
+  - {fileID: 21300000, guid: 2fc52c4395a6c4eb99197ad8ee56ac26, type: 3}
+  - {fileID: 21300000, guid: a9ef995246b0b48c08e3324e0c467634, type: 3}
+  - {fileID: 21300000, guid: 4520fa018556f41849949a8521322750, type: 3}
+--- !u!111 &7495307438797969178
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
