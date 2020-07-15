@@ -20,7 +20,7 @@ public class LinkerSpawner : MonoBehaviour {
         Vector3 spawnerPos = gameObject.transform.position;
         int spawnRow = _GridCoords._Row;
         for (int y = 0; y < spawnCount; ++y, ++spawnRow) {
-            GameObject go = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.PoolTypeLinker);
+            GameObject go = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.Linker);
             go.transform.position = new Vector3(
                 spawnerPos.x,
                 spawnerPos.y + (Layouts._BoardTileSize.y + Layouts._BoardPadding.y) * spawnRow,

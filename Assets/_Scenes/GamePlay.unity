@@ -4059,6 +4059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _FPS: 60
   _FallSpeed: 2.3
+  _FocusedSpinnerPrefab: {fileID: 2828081254031350886, guid: d26a0a41343f848e89cdcf9f7669d632,
+    type: 3}
   _BoardTilePrefab: {fileID: 6953911376855918421, guid: cc337d914a5eb46ada22cf52b5c38c9c,
     type: 3}
   _LinkerSpawnerPrefab: {fileID: 8258689522191014029, guid: 95bd3d5dfd1d54f7cb9ced737be09de7,

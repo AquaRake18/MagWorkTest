@@ -1,5 +1,6 @@
 ﻿public static class ObjectPoolTypes {
-    public static string PoolTypeBoardTile = "BoardTile";
-    public static string PoolTypeSpawner = "Spawner";
-    public static string PoolTypeLinker = "Linker";
+    public static string FocusedSpinner = "FocusedSpinner";
+    public static string BoardTile = "BoardTile";
+    public static string Spawner = "Spawner";
+    public static string Linker = "Linker";
 }

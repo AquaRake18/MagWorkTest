@@ -10,6 +10,8 @@ TagManager:
   - oyster
   - starfish
   - turbot
+  - BoardTile
+  - FocusedSpinner
   layers:
   - Default
   - TransparentFX

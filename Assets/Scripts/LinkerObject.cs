@@ -19,6 +19,8 @@ public class LinkerObject
 	private Vector3 _FallFromPosition;
 	private Vector3 _FallDestination;
 
+	private GameObject _Spinner = null;
+
 	public void Initialize(LinkerLogic linkerLogic) {
 		_LinkerLogic = linkerLogic;
 	}
@@ -105,9 +107,11 @@ public class LinkerObject
 
 	private void SetState(ELinkerState state) {
 		_LinkerState = state;
-		switch (state) {
+		switch (_LinkerState) {
 			case ELinkerState.Focused:
 				_Animaton.Play("LinkerFocused");
+				_Spinner = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.FocusedSpinner);
+				_Spinner.transform.position = transform.position;
 				break;
 			case ELinkerState.Linked:
 				_Animaton.Play("LinkerLinked");
@@ -120,6 +124,11 @@ public class LinkerObject
 				_Animaton.Play("LinkerIdle");
 				gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "LinkerDestroyed";
 				break;
+		}
+		if (_LinkerState != ELinkerState.Focused
+			&& _Spinner != null) {
+			_Spinner.SetActive(false);
+			_Spinner = null;
 		}
 	}
 }
