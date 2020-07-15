@@ -2,12 +2,12 @@
 
 public static class Layouts {
     private static float _XSmall = 1.6f;
-    private static float _Small = 1.9f;
-    private static float _Medium = 2.36f;
-    private static float _Large = 2.76f;
-    private static float _XLarge = 3.24f;
-    private static float _XXLarge = 3.65f;
-    private static float _XXXLarge = 4.1f;
+    private static float _Small = 2.25f;
+    private static float _Medium = 2.87f;
+    private static float _Large = 3.37f;
+    private static float _XLarge = 3.92f;
+    private static float _XXLarge = 4.48f;
+    private static float _XXXLarge = 5.03f;
 
     public static Vector2 _BoardTileSize = new Vector2(.5f, .5f);
     public static Vector2 _BoardPadding = new Vector2(0f, 0f);
