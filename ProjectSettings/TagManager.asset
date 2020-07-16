@@ -12,6 +12,7 @@ TagManager:
   - turbot
   - BoardTile
   - FocusedSpinner
+  - LinkerLine
   layers:
   - Default
   - TransparentFX
@@ -54,6 +55,12 @@ TagManager:
     locked: 0
   - name: LinkerSpawner
     uniqueID: 944676781
+    locked: 0
+  - name: LinkerLine
+    uniqueID: 2006231909
+    locked: 0
+  - name: FocusedSpinner
+    uniqueID: 3113136039
     locked: 0
   - name: LinkerObject
     uniqueID: 1136328135

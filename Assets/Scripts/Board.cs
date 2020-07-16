@@ -7,6 +7,7 @@ public class Board
     public int _FPS = 60;
     public float _FallSpeed = 2.4f;
     public GameObject _FocusedSpinnerPrefab;
+    public GameObject _LinkerLinePrefab;
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject _LinkerPrefab;
@@ -33,6 +34,12 @@ public class Board
         poolFocusedSpinner._Prefab = _FocusedSpinnerPrefab;
         poolFocusedSpinner._Tag = ObjectPoolTypes.FocusedSpinner;
         ObjectPooler.Instance.AddPool(poolFocusedSpinner);
+
+        ObjectPooler.Pool poolLinkerLine = new ObjectPooler.Pool();
+        poolLinkerLine._Count = 16;
+        poolLinkerLine._Prefab = _LinkerLinePrefab;
+        poolLinkerLine._Tag = ObjectPoolTypes.LinkerLine;
+        ObjectPooler.Instance.AddPool(poolLinkerLine);
 
         ObjectPooler.Pool poolBoardTiles = new ObjectPooler.Pool();
         poolBoardTiles._Count = LevelSettings.Instance._MaxWidth * LevelSettings.Instance._MaxHeight;

@@ -14,6 +14,7 @@ public class LinkerLogic {
     private readonly int _MinimumLinks = 3;
     private FallLogic _FallLogic;
     private List<LinkerObject> _LinkedObjects = new List<LinkerObject>();
+    private List<LinkerLine> _LinkedLines = new List<LinkerLine>();
 
     public LinkerLogic(
         Vector3 boardPosition,
@@ -62,6 +63,9 @@ public class LinkerLogic {
             // if new AND same type AND adjacent, successful link
             if (_LinkedObjects.Count > 0) {
                 _LinkedObjects[_LinkedObjects.Count - 1].SetLinked();
+                LinkerLine linkerLine = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.LinkerLine).GetComponent<LinkerLine>();
+                linkerLine.CenterPosition(_LinkedObjects[_LinkedObjects.Count - 1].transform.position, linkerObject.transform.position);
+                _LinkedLines.Add(linkerLine);
             }
             _LinkedObjects.Add(linkerObject);
             return true;
@@ -87,6 +91,10 @@ public class LinkerLogic {
             ScoreConfig.Instance.AddScore(positions);
             _FallLogic.CollapseCollumns();
         }
+        foreach (LinkerLine line in _LinkedLines) {
+            line.gameObject.SetActive(false);
+        }
+        _LinkedLines.Clear();
         _LinkedObjects.Clear();
     }
 
@@ -118,6 +126,12 @@ public class LinkerLogic {
             if (removeRange._Count > 0) {
                 _LinkedObjects.RemoveRange(removeRange._StartIndex, removeRange._Count);
             }
+            for (int lineIndex = 0; lineIndex < _LinkedLines.Count; ++lineIndex) {
+                if (lineIndex >= removeRange._StartIndex - 1) {
+                    _LinkedLines[lineIndex].gameObject.SetActive(false);
+                }
+            }
+            _LinkedLines.RemoveRange(_LinkedObjects.Count - 1, removeRange._Count);
         }
     }
 
