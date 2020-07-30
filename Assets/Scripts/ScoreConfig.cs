@@ -59,19 +59,11 @@ public class ScoreConfig : Singleton<ScoreConfig> {
     }
 
     public void AddScrollingText(int score, Vector3 position) {
-        Vector2 viewport = Camera.main.WorldToViewportPoint(position);
-        Vector2 screenPosition = new Vector2(
-            viewport.x * _ScrollingTextParent.sizeDelta.x,
-            viewport.y * _ScrollingTextParent.sizeDelta.y
-        );
-        screenPosition.y = -screenPosition.y;
+        Vector3 pos = Camera.main.WorldToScreenPoint(position);
 
-        GameObject go = Instantiate(
-            _ScrollingTextPrefab,
-            screenPosition,
-            Quaternion.identity
-        );
+        GameObject go = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.SCT);
         go.transform.SetParent(_ScrollingTextParent);
+        go.transform.position = pos;
         go.GetComponent<TextMeshProUGUI>().text = "" + score;
     }
 }

@@ -11,6 +11,7 @@ public class Board
     public GameObject _BoardTilePrefab;
     public GameObject _LinkerSpawnerPrefab;
     public GameObject _LinkerPrefab;
+    public GameObject _ScrollingTextPrefab;
 
     private LinkerLogic _LinkerLogic;
 
@@ -58,6 +59,12 @@ public class Board
         poolLinkers._Prefab = _LinkerPrefab;
         poolLinkers._Tag = ObjectPoolTypes.Linker;
         ObjectPooler.Instance.AddPool(poolLinkers);
+
+        ObjectPooler.Pool poolSCT = new ObjectPooler.Pool();
+        poolSCT._Count = 20;
+        poolSCT._Prefab = _ScrollingTextPrefab;
+        poolSCT._Tag = ObjectPoolTypes.SCT;
+        ObjectPooler.Instance.AddPool(poolSCT);
     }
 
     void Start() {
