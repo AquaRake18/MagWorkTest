@@ -14,7 +14,6 @@ public class ScoreConfig : Singleton<ScoreConfig> {
     public TextMeshProUGUI _CurrentScoreText;
     public TextMeshProUGUI _TargetScoreText;
     public RectTransform _ScrollingTextParent;
-    public GameObject _ScrollingTextPrefab;
 
     private Animation _MovesBounceAnimation;
 
@@ -43,7 +42,7 @@ public class ScoreConfig : Singleton<ScoreConfig> {
         int newScore = 0;
         for (int links = 0; links < positions.Count; ++links) {
             int score = (_BasicScore + currentTier * _BonusScorePerTier);
-            //AddScrollingText(score, positions[links]);
+            AddScrollingText(score, positions[links]);
             newScore += score;
             ++linkInTier;
             if (linkInTier == _LinksPerTier) {
@@ -64,6 +63,6 @@ public class ScoreConfig : Singleton<ScoreConfig> {
         GameObject go = ObjectPooler.Instance.SpawnFromPool(ObjectPoolTypes.SCT);
         go.transform.SetParent(_ScrollingTextParent);
         go.transform.position = pos;
-        go.GetComponent<TextMeshProUGUI>().text = "" + score;
+        go.GetComponentInChildren<TextMeshProUGUI>().text = "" + score;
     }
 }

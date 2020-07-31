@@ -4011,8 +4011,6 @@ MonoBehaviour:
   _CurrentScoreText: {fileID: 617969637}
   _TargetScoreText: {fileID: 235240199}
   _ScrollingTextParent: {fileID: 1611420657}
-  _ScrollingTextPrefab: {fileID: 362695270584510106, guid: dbc4e45ebb3e44b7eb20c15fbfb89b3f,
-    type: 3}
 --- !u!1 &2110351395
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,5 +4067,5 @@ MonoBehaviour:
     type: 3}
   _LinkerPrefab: {fileID: 1086177302793967712, guid: bd8a6e3af82ae4c25b5bf6408509f601,
     type: 3}
-  _ScrollingTextPrefab: {fileID: 362695270584510106, guid: dbc4e45ebb3e44b7eb20c15fbfb89b3f,
+  _ScrollingTextPrefab: {fileID: 5884080748876008286, guid: a9131521879a54ec5b90cefadb465a72,
     type: 3}
